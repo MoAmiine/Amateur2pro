@@ -22,7 +22,7 @@
             <div class="flex items-center gap-8">
                 <div class="hidden md:flex gap-8 text-sm font-medium uppercase tracking-wider text-slate-400">
                     <a href="{{ route('tournois') }}" class="hover:text-purple-400 transition">Tournois</a>
-                    <a href="/equipes" class="hover:text-purple-400 transition">Équipes</a>
+                    <a href="{{ route('equipes.index') }}" class="hover:text-purple-400 transition">Équipes</a>
                     <a href="#features" class="hover:text-purple-400 transition">Fonctionnalités</a>
                 </div>
                 
