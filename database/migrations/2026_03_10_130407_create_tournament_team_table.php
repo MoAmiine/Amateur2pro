@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('tournament_team', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('tournament_id')->constrained();
+            $table->foreignId('team_id')->constrained();
+            $table->timestamp('joined_at');
+            $table->timestamp('left_at')->nullable();
         });
     }
 
