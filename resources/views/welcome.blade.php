@@ -3,10 +3,7 @@
     <section class="min-h-screen flex items-center pt-20">
         <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
             <div class="relative z-10">
-                <div class="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-none border border-purple-500/30 text-purple-400 text-xs font-bold uppercase tracking-[0.2em]">
-                    <span class="w-2 h-2 bg-purple-500 animate-pulse"></span>
-                    Serveurs Live : Online
-                </div>
+
                 <h1 class="font-display text-7xl md:text-9xl font-bold italic tracking-tighter leading-[0.9] mb-8">
                     AMATEUR<span class="text-purple-500">2</span>PRO
                 </h1>
