@@ -14,12 +14,12 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profil', function () {
         return view('auth.profile');
-    })->name('profile');
+        })->name('profile');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 Route::get('/dashboard', function () {
     return view('dashboard');
