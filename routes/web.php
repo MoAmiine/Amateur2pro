@@ -9,13 +9,18 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login.index');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register.index');
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profil', function () {
+        return view('auth.profile');
+    })->name('profile');
+});
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
