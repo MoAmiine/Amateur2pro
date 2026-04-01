@@ -18,14 +18,15 @@
             <h1 class="font-display text-2xl font-bold uppercase tracking-widest">Connexion</h1>
         </div>
 
-        <form action="#" method="POST" class="space-y-6">
+        <form action="{{ route('login') }}" method="POST" class="space-y-6">
+            @csrf
             <div>
                 <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Email</label>
-                <input type="email" class="w-full bg-slate-900 border border-white/10 p-4 rounded-sm focus:border-purple-500 outline-none transition-all">
+                <input name="email" value="{{ old('email') }}" type="email" class="w-full bg-slate-900 border border-white/10 p-4 rounded-sm focus:border-purple-500 outline-none transition-all">
             </div>
             <div>
                 <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Mot de passe</label>
-                <input type="password" class="w-full bg-slate-900 border border-white/10 p-4 rounded-sm focus:border-purple-500 outline-none transition-all">
+                <input name="password" type="password" class="w-full bg-slate-900 border border-white/10 p-4 rounded-sm focus:border-purple-500 outline-none transition-all">
             </div>
             <button class="w-full py-4 bg-purple-600 hover:bg-purple-500 font-bold uppercase tracking-widest transition-all">
                 Accéder au Dashboard

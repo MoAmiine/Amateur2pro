@@ -26,7 +26,7 @@
 
     <main class="flex-1 p-12 overflow-y-auto">
         <header class="mb-12">
-            <h1 class="font-display text-4xl font-bold uppercase tracking-widest">Bienvenue, Joueur</h1>
+            <h1 class="font-display text-4xl font-bold tracking-widest">BIENVENUE, {{ auth()->user()->name }}</h1>
             <p class="text-slate-400">Voici tes statistiques en temps réel.</p>
         </header>
 
