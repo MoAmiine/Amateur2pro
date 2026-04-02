@@ -19,7 +19,7 @@
             <p class="text-slate-400 font-sans">Configure ton tournoi et lance les hostilités.</p>
         </header>
 
-        <form action="#" method="POST" class="bg-slate-900/50 p-8 border border-white/10 space-y-6">
+        <form action="{{ route('tournament.store') }}" method="POST" class="bg-slate-900/50 p-8 border border-white/10 space-y-6">
             @csrf
 
             <div>
@@ -31,9 +31,9 @@
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Jeu</label>
                     <select name="game" class="w-full bg-slate-950 border border-white/10 p-4 rounded-sm focus:border-purple-500 transition-all outline-none">
-                        <option>Valorant</option>
-                        <option>League of Legends</option>
-                        <option>Counter-Strike 2</option>
+                        @foreach ($games as $game)
+                        <option>{{ $game->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div>
