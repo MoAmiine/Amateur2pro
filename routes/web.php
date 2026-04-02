@@ -16,9 +16,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profil', function () {
-        return view('auth.profile');
-        })->name('profile');
+  Route::get('/profil', [AuthController::class, 'showProfile'])->name('profile');
+    Route::post('/profil/update', [AuthController::class, 'updateProfile'])->name('profile.update');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 Route::get('/dashboard', function () {
@@ -27,6 +26,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/tournois', [TournamentController::class, 'index'])->name('tournois');
 Route::get('/tournois/create', [TournamentController::class, 'create'])->name('tournois.create');
+Route::post('/tournoi/store', [TournamentController::class, 'store'])->name('tournament.store');
 
 Route::get('/equipes', [TeamController::class, 'index'])->name('equipes.index');
 Route::get('/equipes/create', [TeamController::class, 'create'])->name('equipes.create');
