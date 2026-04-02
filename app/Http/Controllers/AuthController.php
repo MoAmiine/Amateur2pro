@@ -48,4 +48,23 @@ public function logout(Request $request)
     $request->session()->regenerateToken();
     return redirect('/');
 }
+
+public function showProfile(){
+    $games = \App\Models\Game::all();
+    return view('auth.profile', compact('games'));
+}
+
+public function updateProfile(Request $request)
+{
+    $user = Auth::user();
+
+    $data = $request->validate([
+        'name'  => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+    ]);
+
+    $user->update($data);
+
+    return redirect()->route('profile');
+}
 }
