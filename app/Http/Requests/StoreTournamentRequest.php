@@ -22,12 +22,12 @@ class StoreTournamentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'         => 'required|string|max:255',
-            'game_id'      => 'required|exists:games,id',
-            'max_players'  => 'required|integer|min:2',
-            'start_date'   => 'required|date|after:now',
-            'format'       => 'required|in:single_elimination,league',
-            'description'  => 'nullable|string',
+            'name' => 'required|string|max:255',
+            'game_id' => 'required|exists:games,id',
+            'max_teams' => 'required|integer|min:2',
+            'cashprize' => 'nullable|integer',
+            'date' => 'required|date',
+            'description' => 'nullable|string'
         ];
     }
 }

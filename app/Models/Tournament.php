@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Tournament extends Model
 {
     protected $fillable = [
-        'title',
-        'organizer_id',
+        'name',
+        'game_id',
         'max_teams',
-        'status'
+        'cashprize',
+        'date',
+        'description',
+        'organizer_id'
     ];
 
     public function organizer()
     {
-        return $this->belongsTo(User::class , 'organizer_id');
+        return $this->belongsTo(User::class, 'organizer_id');
     }
 
     public function teams()
