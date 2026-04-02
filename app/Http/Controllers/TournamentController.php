@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTournamentRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class TournamentController extends Controller
 {
@@ -12,6 +16,14 @@ class TournamentController extends Controller
     }
 
     public function create(){
-        return view('tournoi.create');
+        $games = Game::all();
+        return view('tournoi.create', compact('games'));
+    }
+
+    public function store(StoreTournamentRequest $request){
+        $validated = $request->validated();
+        Auth::user()->tournament()->create($validated);
+
+        return redirect()->route('tournois');
     }
 }
