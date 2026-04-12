@@ -9,20 +9,34 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
     public function up(): void
-    {
-        Schema::create('tournaments', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->foreignId('game_id')->constrained();
-            $table->integer('max_teams');
-            $table->integer('cashprize')->nullable();
-            $table->date('date');
-            $table->text('description')->nullable();
-            $table->foreignId('organizer_id')->constrained('users');
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('matches', function (Blueprint $table) {
+        $table->id();
+
+        $table->foreignId('tournament_id')
+            ->constrained();
+
+        $table->foreignId('team1_id')
+            ->constrained('teams');
+
+        $table->foreignId('team2_id')
+            ->constrained('teams');
+
+        $table->integer('score1')->nullable();
+        $table->integer('score2')->nullable();
+
+        $table->foreignId('winner_id')
+            ->nullable()
+            ->constrained('teams');
+
+        $table->integer('round');
+
+        $table->timestamps();
+    });
+}
+
 
     /**
      * Reverse the migrations.

@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('tournaments', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->foreignId('game_id')->constrained();
+            $table->integer('max_teams');
+            $table->integer('cashprize')->nullable();
+            $table->date('date');
+            $table->text('description')->nullable();
+            $table->foreignId('organizer_id')->constrained('users');
             $table->timestamps();
         });
     }

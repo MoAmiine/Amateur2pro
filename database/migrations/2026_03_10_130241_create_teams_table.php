@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teams', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('logo')->nullable();
-            $table->foreignId('captain_id')->constrained('users'); // Lien avec User (Capitaine)
-            $table->timestamps();
-        });
+            Schema::create('teams', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('logo')->nullable();
+                $table->foreignId('captain_id')->constrained('users')->cascadeOnDelete();
+                $table->timestamps();
+            });
     }
 
     /**
