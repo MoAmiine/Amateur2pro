@@ -36,5 +36,5 @@ Route::get('/equipes/create', [TeamController::class, 'create'])->name('equipes.
 Route::post('/equipes', [TeamController::class, 'store'])->name('equipes.store');
 Route::get('/equipes/{team}', [TeamController::class, 'show'])->name('equipes.show');
 Route::post('/equipes/{team}/invite', [TeamController::class, 'invite'])->name('equipes.invite');
-Route::post('/teams/{team}/invite', [TeamController::class, 'invite'])
-    ->name('teams.invite');
+Route::post('/teams/{team}/invite',[TeamController::class, 'invite'])->name('teams.invite');
+Route::get('/invite/{token}',[TeamController::class, 'accept'])->name('teams.accept');
