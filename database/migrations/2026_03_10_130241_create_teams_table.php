@@ -16,6 +16,7 @@ return new class extends Migration
                 $table->string('name');
                 $table->string('logo')->nullable();
                 $table->foreignId('captain_id')->constrained('users')->cascadeOnDelete();
+                $table->foreignId('game_id')->constrained();
                 $table->timestamps();
             });
     }
