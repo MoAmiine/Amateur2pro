@@ -34,4 +34,13 @@ class TeamController extends Controller
 
         return redirect()->route('equipes.index');
     }
+    public function show(Team $team)
+{
+    $team->load(['users', 'captain']);
+    $teams = Team::all();
+    $games = Game::all();
+    return view('equipe.show', compact('teams', 'games', 'team'));
+}
+
+    
 }
