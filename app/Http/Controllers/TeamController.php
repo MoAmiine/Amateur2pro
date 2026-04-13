@@ -85,5 +85,10 @@ class TeamController extends Controller
     return redirect()
         ->route('equipes.show',$invitation->team)
         ->with('success','Team joined successfully');
-}   
+} 
+
+    public function removeMember(Team $team, User $user){
+        $team->users()->detach($user->id);
+        return back();
+    }
 }

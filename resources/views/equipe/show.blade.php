@@ -90,18 +90,21 @@
 
                     <div class="flex-1">
                         <p class="font-semibold">{{ $user->name }}</p>
-                        <p class="text-xs text-slate-400">{{ $user->email }}</p>
+                        @if ($user->id === $team->captain_id)
+                            
+                        <p class="text-xs text-yellow-500">Capitaine</p>
+                        @endif
                     </div>
 
                     @if(auth()->user()->id === $team->captain_id)
 
-                        <form method="POST" action="#">
+                        <form method="POST" action="{{ route('teams.members.remove',  [$team, $user]) }}" onsubmit="return confirm('remove this member ?')">
                             @csrf
                             @method('DELETE')
 
-                            <button class="text-red-500 hover:text-red-400 text-xs">
-                                Remove
-                            </button>
+<button class="px-2 py-1 bg-red-600 hover:bg-red-500 text-white text-[10px] uppercase rounded">
+Kick
+</button>
                         </form>
 
                     @endif
