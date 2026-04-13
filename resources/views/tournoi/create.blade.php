@@ -37,8 +37,8 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Format</label>
-                    <input type="text" name="format" placeholder="ex: 5v5" class="w-full bg-slate-950 border border-white/10 p-4 rounded-sm focus:border-purple-500 transition-all outline-none">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Max teams</label>
+                    <input type="number" name="format" placeholder="ex: 16" class="w-full bg-slate-950 border border-white/10 p-4 rounded-sm focus:border-purple-500 transition-all outline-none">
                 </div>
             </div>
 
@@ -59,7 +59,7 @@
             </div>
 
             <button type="submit" class="w-full py-4 bg-purple-600 hover:bg-purple-500 text-white font-bold uppercase tracking-widest transition-all duration-300">
-                Lancer le tournoi
+                creér le tournoi
             </button>
         </form>
 

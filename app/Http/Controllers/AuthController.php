@@ -56,15 +56,17 @@ public function showProfile(){
 
 public function updateProfile(Request $request)
 {
-    $user = Auth::user();
+    $user = auth()->user();
 
-    $data = $request->validate([
-        'name'  => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . $user->id,
+    $user->update([
+        'name' => $request->name,
+        'email' => $request->email
     ]);
 
-    $user->update($data);
+    if($request->games){
+        $user->games()->sync($request->games);
+    }
 
-    return redirect()->route('profile');
+    return back();
 }
 }
