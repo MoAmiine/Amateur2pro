@@ -148,10 +148,6 @@
 
             </form>
 
-            <p class="text-xs text-slate-500 mt-2">
-                The user will be directly added to the team if email exists.
-            </p>
-
         </div>
 
         @endif

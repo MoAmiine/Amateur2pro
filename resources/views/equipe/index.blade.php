@@ -38,7 +38,7 @@
                     <p>Capitaine: {{ $team->captain->name }}</p>
                 </div>
                 <div class="flex gap-2">
-                    <a href="{{ route('teams.show', $team) }} "class="flex-1 py-2 border border-white/10 hover:border-white text-xs uppercase font-bold transition text-center">Voir</a>
+                    <a href="{{ route('equipes.show', $team) }} "class="flex-1 py-2 border border-white/10 hover:border-white text-xs uppercase font-bold transition text-center">Voir</a>
                     @if(!$team->users->contains(auth()->user()->id))
                     <button class="flex-1 py-2 bg-white text-slate-950 text-xs uppercase font-bold transition hover:bg-slate-200">Rejoindre</button>
                     @else
