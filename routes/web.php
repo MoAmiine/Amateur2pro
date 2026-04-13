@@ -30,3 +30,4 @@ Route::post('/tournoi/store', [TournamentController::class, 'store'])->name('tou
 
 Route::get('/equipes', [TeamController::class, 'index'])->name('equipes.index');
 Route::get('/equipes/create', [TeamController::class, 'create'])->name('equipes.create');
+Route::post('/equipes', [TeamController::class, 'store'])->name('equipes.store');
