@@ -1,220 +1,239 @@
 <x-layouts.app>
 
-<div class="min-h-screen pt-32 pb-12 px-6">
+<div class="min-h-screen pt-28 pb-16 px-6 bg-gradient-to-b from-slate-950 to-black">
 
-<div class="max-w-6xl mx-auto">
+<div class="max-w-7xl mx-auto">
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+{{-- HEADER PROFILE --}}
+<div class="bg-gradient-to-r from-purple-600/20 to-blue-600/20 border border-white/10 p-8 rounded-2xl mb-8 backdrop-blur">
 
-        {{-- LEFT --}}
-        <div class="lg:col-span-2 space-y-6">
+<div class="flex items-center justify-between">
 
-            {{-- USER INFO --}}
-            <div class="bg-slate-900/50 border border-white/5 p-8 rounded-sm">
+<div class="flex items-center gap-6">
 
-                <h3 class="text-xs font-bold uppercase tracking-widest text-purple-500 mb-6 italic">
-                    Informations Utilisateur
-                </h3>
+<div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl flex items-center justify-center text-2xl font-bold">
+{{ strtoupper(substr(Auth::user()->name,0,1)) }}
+</div>
 
-                <div class="grid grid-cols-2 gap-6 text-sm">
+<div>
+<h1 class="text-2xl font-bold text-white uppercase tracking-widest">
+{{ Auth::user()->name }}
+</h1>
 
-                    <div>
-                        <p class="text-slate-400 text-[10px] uppercase">Nom</p>
-                        <p class="text-white font-bold">{{ Auth::user()->name }}</p>
-                    </div>
+<p class="text-slate-400 text-sm">
+{{ Auth::user()->email }}
+</p>
 
-                    <div>
-                        <p class="text-slate-400 text-[10px] uppercase">Email</p>
-                        <p class="text-white font-bold">{{ Auth::user()->email }}</p>
-                    </div>
-
-                    <div>
-                        <p class="text-slate-400 text-[10px] uppercase">Membre depuis</p>
-                        <p class="text-white font-bold">
-                            {{ Auth::user()->created_at->format('d M Y') }}
-                        </p>
-                    </div>
-
-                    <div>
-                        <p class="text-slate-400 text-[10px] uppercase">Statut</p>
-                        <p class="text-purple-500 font-bold">Utilisateur</p>
-                    </div>
-
-                </div>
-            </div>
-
-            {{-- STATS --}}
-            <div class="grid grid-cols-3 gap-4">
-
-                <div class="bg-slate-900/50 border border-white/5 p-4 text-center">
-                    <p class="text-purple-500 text-xl font-bold">
-                        {{ Auth::user()->games()->count() }}
-                    </p>
-                    <p class="text-[9px] uppercase text-slate-400">Jeux</p>
-                </div>
-
-                <div class="bg-slate-900/50 border border-white/5 p-4 text-center">
-                    <p class="text-purple-500 text-xl font-bold">
-                        {{ Auth::user()->teams()->count() }}
-                    </p>
-                    <p class="text-[9px] uppercase text-slate-400">Equipes</p>
-                </div>
-
-                <div class="bg-slate-900/50 border border-white/5 p-4 text-center">
-                    <p class="text-purple-500 text-xl font-bold">
-                        {{ Auth::user()->tournaments()->count() }}
-                    </p>
-                    <p class="text-[9px] uppercase text-slate-400">Tournois</p>
-                </div>
-
-            </div>
-
-            {{-- EDIT PROFILE --}}
-            <div class="bg-slate-900/50 border border-white/5 p-8 rounded-sm">
-
-                <h3 class="text-xs font-bold uppercase tracking-widest text-purple-500 mb-6 italic">
-                    Modifier Profil
-                </h3>
-
-                <form action="{{ route('profile.update') }}" method="POST" class="space-y-4">
-                    @csrf
-
-                    <input type="text"
-                           name="name"
-                           value="{{ Auth::user()->name }}"
-                           class="w-full bg-slate-950 border border-white/10 p-4 text-white focus:border-purple-500 outline-none">
-
-                    <input type="email"
-                           name="email"
-                           value="{{ Auth::user()->email }}"
-                           class="w-full bg-slate-950 border border-white/10 p-4 text-white focus:border-purple-500 outline-none">
-
-                    <button class="w-full py-4 bg-purple-600 hover:bg-purple-500 text-white font-bold uppercase text-xs">
-                        Sauvegarder
-                    </button>
-
-                </form>
-
-                {{-- 🚪 LOGOUT --}}
-                <form method="POST" action="{{ route('logout') }}" class="mt-4">
-                    @csrf
-
-                    <button type="submit"
-                            class="w-full py-4 bg-red-600 hover:bg-red-500 text-white font-bold uppercase text-xs transition">
-                        Se déconnecter
-                    </button>
-                </form>
-
-            </div>
-
-        </div>
-
-        {{-- RIGHT SIDE --}}
-        <div class="bg-slate-900/50 border border-white/5 p-6 rounded-sm h-fit">
-
-            <div class="flex justify-between mb-4">
-                <span class="text-[10px] uppercase text-purple-400">
-                    Mes Jeux
-                </span>
-
-                <button type="button"
-                        onclick="openModal()"
-                        class="text-[10px] bg-white/5 px-2 py-1 hover:bg-purple-600">
-                    + Ajouter
-                </button>
-            </div>
-
-            <div class="space-y-3">
-
-                @foreach(Auth::user()->games as $game)
-
-                    <div class="flex items-center gap-3 bg-slate-950 p-2 border border-white/5">
-
-                        <img src="{{ $game->image }}"
-                             class="w-12 h-8 object-cover rounded">
-
-                        <span class="text-[10px] text-white uppercase">
-                            {{ $game->name }}
-                        </span>
-
-                    </div>
-
-                @endforeach
-
-            </div>
-
-        </div>
-
-    </div>
+<p class="text-purple-400 text-xs uppercase tracking-widest mt-1">
+Member since {{ Auth::user()->created_at->format('M Y') }}
+</p>
 
 </div>
+
 </div>
+
+<form method="POST" action="{{ route('logout') }}">
+@csrf
+<button class="px-6 py-3 bg-red-600 hover:bg-red-500 text-white text-xs uppercase font-bold rounded-xl transition">
+Logout
+</button>
+</form>
+
+</div>
+
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+{{-- LEFT --}}
+<div class="lg:col-span-2 space-y-6">
+
+{{-- STATS --}}
+<div class="grid grid-cols-3 gap-6">
+
+<div class="bg-slate-900/60 border border-white/10 p-6 rounded-2xl hover:border-purple-500 transition">
+<p class="text-3xl font-bold text-purple-500">
+{{ Auth::user()->games()->count() }}
+</p>
+<p class="text-xs uppercase text-slate-400 mt-2">Games</p>
+</div>
+
+<div class="bg-slate-900/60 border border-white/10 p-6 rounded-2xl hover:border-purple-500 transition">
+<p class="text-3xl font-bold text-purple-500">
+{{ Auth::user()->teams()->count() }}
+</p>
+<p class="text-xs uppercase text-slate-400 mt-2">Teams</p>
+</div>
+
+<div class="bg-slate-900/60 border border-white/10 p-6 rounded-2xl hover:border-purple-500 transition">
+<p class="text-3xl font-bold text-purple-500">
+{{ Auth::user()->tournaments()->count() }}
+</p>
+<p class="text-xs uppercase text-slate-400 mt-2">Tournaments</p>
+</div>
+
+</div>
+
+{{-- EDIT PROFILE --}}
+<div class="bg-slate-900/60 border border-white/10 p-8 rounded-2xl">
+
+<h3 class="text-xs font-bold uppercase tracking-widest text-purple-500 mb-6">
+Edit Profile
+</h3>
+
+<form action="{{ route('profile.update') }}" method="POST" class="space-y-4">
+@csrf
+
+<input 
+type="text"
+name="name"
+value="{{ Auth::user()->name }}"
+class="w-full bg-slate-950 border border-white/10 p-4 text-white rounded-xl focus:border-purple-500 outline-none">
+
+<input 
+type="email"
+name="email"
+value="{{ Auth::user()->email }}"
+class="w-full bg-slate-950 border border-white/10 p-4 text-white rounded-xl focus:border-purple-500 outline-none">
+
+<button class="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:opacity-90 text-white font-bold uppercase text-xs rounded-xl">
+Save Changes
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+{{-- RIGHT --}}
+<div class="space-y-6">
+
+{{-- GAMES --}}
+<div class="bg-slate-900/60 border border-white/10 p-6 rounded-2xl">
+
+<div class="flex justify-between items-center mb-6">
+
+<h3 class="text-xs uppercase text-purple-400 font-bold">
+My Games
+</h3>
+
+<button 
+onclick="openModal()" 
+class="px-3 py-1 bg-purple-600 hover:bg-purple-500 text-xs rounded-lg">
++ Add
+</button>
+
+</div>
+
+<div class="space-y-3">
+
+@foreach(Auth::user()->games as $game)
+
+<div class="flex items-center gap-4 bg-slate-950 p-3 rounded-xl border border-white/5 hover:border-purple-500 transition">
+
+<img 
+src="{{ $game->image }}"
+class="w-14 h-10 object-cover rounded">
+
+<div>
+<p class="text-white text-xs font-bold uppercase">
+{{ $game->name }}
+</p>
+
+<p class="text-slate-400 text-[10px]">
+Competitive Game
+</p>
+</div>
+
+</div>
+
+@endforeach
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 
 {{-- MODAL --}}
 <div id="gameModal" class="fixed inset-0 hidden items-center justify-center bg-black/80 z-50">
 
-<div class="bg-slate-900 p-6 w-full max-w-lg border border-white/10">
+<div class="bg-slate-900 p-6 w-full max-w-xl border border-white/10 rounded-2xl">
 
-    <h2 class="text-white mb-4 uppercase text-xs">
-        Choisir vos jeux
-    </h2>
+<h2 class="text-white mb-4 uppercase text-xs">
+Choose your games
+</h2>
 
-    <form action="{{ route('profile.games') }}" method="POST">
-        @csrf
+<form action="{{ route('profile.games') }}" method="POST">
+@csrf
 
-        <div class="grid grid-cols-2 gap-4 max-h-80 overflow-y-auto">
+<div class="grid grid-cols-2 gap-4 max-h-96 overflow-y-auto">
 
-            @foreach($games as $game)
+@foreach($games as $game)
 
-                <label class="cursor-pointer">
+<label class="cursor-pointer">
 
-                    <input type="checkbox"
-                           name="games[]"
-                           value="{{ $game->id }}"
-                           class="hidden peer"
-                           {{ Auth::user()->games->contains($game->id) ? 'checked' : '' }}>
+<input 
+type="checkbox"
+name="games[]"
+value="{{ $game->id }}"
+class="hidden peer"
+{{ Auth::user()->games->contains($game->id) ? 'checked' : '' }}>
 
-                    <div class="border border-white/10 peer-checked:border-purple-600">
+<div class="border border-white/10 peer-checked:border-purple-600 rounded-xl overflow-hidden hover:scale-105 transition">
 
-                        <img src="{{ $game->image }}"
-                             class="w-full h-24 object-cover">
+<img 
+src="{{ $game->image }}"
+class="w-full h-28 object-cover">
 
-                        <p class="text-white text-[10px] p-2">
-                            {{ $game->name }}
-                        </p>
+<p class="text-white text-xs p-2 uppercase">
+{{ $game->name }}
+</p>
 
-                    </div>
+</div>
 
-                </label>
+</label>
 
-            @endforeach
+@endforeach
 
-        </div>
+</div>
 
-        <button class="mt-4 w-full bg-purple-600 py-3 text-white uppercase text-xs">
-            Confirmer
-        </button>
+<button class="mt-4 w-full bg-gradient-to-r from-purple-600 to-blue-600 py-3 text-white uppercase text-xs rounded-xl">
+Confirm
+</button>
 
-    </form>
+</form>
 
-    <button type="button"
-            onclick="closeModal()"
-            class="mt-2 w-full bg-slate-700 py-2 text-white uppercase text-xs">
-        Fermer
-    </button>
+<button 
+onclick="closeModal()" 
+class="mt-2 w-full bg-slate-700 py-2 text-white uppercase text-xs rounded-xl">
+Close
+</button>
 
 </div>
 
 </div>
+
 
 <script>
+
 function openModal(){
-    document.getElementById('gameModal').style.display = "flex"
+document.getElementById('gameModal').style.display = "flex"
 }
 
 function closeModal(){
-    document.getElementById('gameModal').style.display = "none"
+document.getElementById('gameModal').style.display = "none"
 }
+
 </script>
 
 </x-layouts.app>
