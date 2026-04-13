@@ -8,7 +8,10 @@ use App\Http\Requests\StoreTeamRequest;
 use App\Models\Game;
 use App\Models\User;
 use App\Http\Requests\InvitationRequest;
-
+use Illuminate\Support\Str;
+use Mail;
+use App\Models\TeamInvitation;
+use App\Mail\TeamInviteMail;
 
 class TeamController extends Controller
 {
@@ -38,30 +41,49 @@ class TeamController extends Controller
         return redirect()->route('equipes.index');
     }
     public function show(Team $team)
-{
-    $team->load(['users', 'captain']);
-    $teams = Team::all();
-    $games = Game::all();
-    return view('equipe.show', compact('teams', 'games', 'team'));
-}
+    {
+        $team->load(['users', 'captain']);
+        $teams = Team::all();
+        $games = Game::all();
+        return view('equipe.show', compact('teams', 'games', 'team'));
+    }
 
-    public function edit(){
+    public function edit()
+    {
         $team = Team::all();
         return view('equipe.edit', compact('team'));
     }
 
-public function invite(InvitationRequest $request, Team $team)
-{
+    public function invite(InvitationRequest $request, Team $team)
+    {
+        if ($team->captain_id !== auth()->id()) {
+            return back()->with('error', 'Only captain can invite');
+        }
 
+        $invitation = TeamInvitation::create([
+            'team_id' => $team->id,
+            'email' => $request->email,
+            'token' => Str::random(40)
+        ]);
 
-    $user = User::where('email', $request->email)->first();
+        Mail::to($request->email)
+            ->send(new TeamInviteMail($invitation));
 
-    if ($team->users()->where('user_id', $user->id)->exists()) {
-        return back()->with('error', 'User already in team');
+        return back()->with('success', 'Invitation envoyée');
     }
 
-    $team->users()->attach($user->id);
+    public function accept($token)
+{
+    $invitation = TeamInvitation::where('token',$token)->firstOrFail();
 
-    return redirect()->route('equipes.show', $team)->with('success', 'Invitation envoyée avec succes');
-}
+    $user = auth()->user();
+
+    $invitation->team->users()->attach($user->id);
+
+    $invitation->delete();
+
+    return redirect()
+        ->route('equipes.show',$invitation->team)
+        ->with('success','Team joined successfully');
+}   
 }
