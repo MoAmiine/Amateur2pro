@@ -16,8 +16,11 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::middleware('auth')->group(function () {
-  Route::get('/profil', [AuthController::class, 'showProfile'])->name('profile');
-    Route::post('/profil/update', [AuthController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/profil', [AuthController::class, 'showProfile'])->name('profile');
+    Route::post('/profile/update', [AuthController::class, 'update'])
+        ->name('profile.update');
+    Route::post('/profile/games', [AuthController::class, 'updateGames'])
+        ->name('profile.games');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 Route::get('/dashboard', function () {

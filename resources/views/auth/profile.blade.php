@@ -159,7 +159,7 @@
         Choisir vos jeux
     </h2>
 
-    <form action="{{ route('profile.update') }}" method="POST">
+    <form action="{{ route('profile.games') }}" method="POST">
         @csrf
 
         <div class="grid grid-cols-2 gap-4 max-h-80 overflow-y-auto">

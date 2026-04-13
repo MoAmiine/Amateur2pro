@@ -54,18 +54,19 @@ public function showProfile(){
     return view('auth.profile', compact('games'));
 }
 
-public function updateProfile(Request $request)
+public function update(Request $request)
 {
-    $user = auth()->user();
-
-    $user->update([
+    auth()->user()->update([
         'name' => $request->name,
-        'email' => $request->email
+        'email' => $request->email,
     ]);
 
-    if($request->games){
-        $user->games()->sync($request->games);
-    }
+    return back();
+}
+
+public function updateGames(Request $request)
+{
+    auth()->user()->games()->sync($request->games);
 
     return back();
 }
