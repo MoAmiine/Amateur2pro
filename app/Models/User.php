@@ -52,13 +52,18 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function teams()
-    {
-        return $this->hasMany(Team::class, 'captain_id');
-    }
-
     public function games()
     {
         return $this->belongsToMany(Game::class);
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
+    }
+
+    public function tournaments()
+    {
+        return $this->hasMany(Tournament::class, 'organizer_id');
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use App\Models\Game;
@@ -36,7 +37,10 @@ class GameSeeder extends Seeder
         ];
 
         foreach ($games as $game) {
-            Game::create($game);
+            Game::updateOrCreate(
+                ['name' => $game['name']],
+                $game
+            );
         }
     }
 }

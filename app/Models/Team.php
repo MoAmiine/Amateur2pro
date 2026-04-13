@@ -17,9 +17,13 @@ class Team extends Model
         return $this->belongsTo(User::class, 'captain_id');
     }
 
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'team_members');
+    }
+
     public function tournaments()
     {
-        return $this->belongsToMany(Tournament::class)
-            ->withPivot('joined_at', 'left_at');
+        return $this->belongsToMany(Tournament::class, 'tournament_team');
     }
 }
