@@ -27,7 +27,7 @@
                 
             <div class="bg-slate-900/50 border border-white/10 p-6 hover:border-purple-500 transition-all duration-300 group">
                 <div class="flex items-center gap-4 mb-6">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center font-bold text-xl">N</div>
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center font-bold text-xl">{{ strtoupper(substr($team->name, 0, 1)) }}</div>
                     <div>
                         <h3 class="font-bold uppercase tracking-widest">{{ $team->name }}</h3>
                         <span class="text-[10px] text-purple-400 uppercase tracking-widest">{{ $team->description }}</span>
@@ -38,8 +38,12 @@
                     <p>Capitaine: {{ $team->captain->name }}</p>
                 </div>
                 <div class="flex gap-2">
-                    <button class="flex-1 py-2 border border-white/10 hover:border-white text-xs uppercase font-bold transition">Voir</button>
+                    <a href="{{ route('teams.show', $team) }} "class="flex-1 py-2 border border-white/10 hover:border-white text-xs uppercase font-bold transition text-center">Voir</a>
+                    @if(!$team->users->contains(auth()->user()->id))
                     <button class="flex-1 py-2 bg-white text-slate-950 text-xs uppercase font-bold transition hover:bg-slate-200">Rejoindre</button>
+                    @else
+                    <button class="flex-1 py-2 bg-gray-400 text-slate-950 text-xs uppercase font-bold transition hover:bg-slate-200 cursor-not-allowed">Membre</button>
+                    @endif
                 </div>
             </div>
             @endforeach
