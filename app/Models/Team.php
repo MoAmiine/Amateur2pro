@@ -8,7 +8,8 @@ class Team extends Model
 {
     protected $fillable = [
         'name',
-        'logo',
+        'description',
+        'game_id',
         'captain_id'
     ];
 
@@ -25,5 +26,9 @@ class Team extends Model
     public function tournaments()
     {
         return $this->belongsToMany(Tournament::class, 'tournament_team');
+    }
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

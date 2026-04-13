@@ -19,7 +19,7 @@
             <p class="text-slate-400 font-sans">Recrute tes coéquipiers et prépare-toi pour le tournoi.</p>
         </header>
 
-        <form action="" method="POST" class="bg-slate-900/50 p-8 border border-white/10 space-y-6">
+        <form action="{{ route('equipes.store') }}" method="POST" class="bg-slate-900/50 p-8 border border-white/10 space-y-6">
             @csrf
 
             <div>
@@ -29,10 +29,12 @@
 
             <div>
                 <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Jeu principal</label>
-                <select name="game" class="w-full bg-slate-950 border border-white/10 p-4 rounded-sm focus:border-purple-500 transition-all outline-none">
-                    <option value="valorant">Valorant</option>
-                    <option value="lol">League of Legends</option>
-                    <option value="cs2">Counter-Strike 2</option>
+                <select name="game_id" class="w-full bg-slate-950 border border-white/10 p-4 rounded-sm focus:border-purple-500 transition-all outline-none">
+                   @foreach ($games as $game)
+                   <option value="{{ $game->id }}">{{ $game->name }}</option>
+                       
+                   @endforeach
+
                 </select>
             </div>
 
