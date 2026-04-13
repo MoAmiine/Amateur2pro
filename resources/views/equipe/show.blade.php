@@ -2,7 +2,6 @@
 
 <div class="max-w-6xl mx-auto px-6 pt-28 pb-20">
 
-    {{-- BACK --}}
     <a href="{{ route('equipes.index') }}"
        class="text-slate-400 hover:text-white transition text-sm">
         ← Back to Teams
@@ -13,12 +12,10 @@
 
         <div class="flex items-center gap-6">
 
-            {{-- AVATAR --}}
             <div class="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center text-2xl font-bold">
                 {{ strtoupper(substr($team->name, 0, 1)) }}
             </div>
 
-            {{-- INFO --}}
             <div class="flex-1">
 
                 <h1 class="text-4xl font-bold uppercase tracking-widest">
@@ -38,7 +35,6 @@
 
             </div>
 
-            {{-- CAPTAIN ACTIONS --}}
             @auth
                 @if(auth()->user()->id === $team->captain_id)
 
@@ -80,24 +76,8 @@
     {{-- MEMBERS --}}
     <div class="mt-6 bg-slate-900/30 border border-white/10 p-6 rounded-xl">
 
-        <div class="flex justify-between items-center mb-4">
+        <h2 class="font-bold mb-4">Members</h2>
 
-            <h2 class="font-bold">Members</h2>
-
-            {{-- CAPTAIN ADD MEMBER --}}
-            @auth
-                @if(auth()->user()->id === $team->captain_id)
-
-                    <button class="px-4 py-2 bg-white text-black text-xs uppercase font-bold rounded-lg hover:bg-slate-200 transition">
-                        + Add Player
-                    </button>
-
-                @endif
-            @endauth
-
-        </div>
-
-        {{-- MEMBERS LIST --}}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
             @forelse ($team->users as $user)
@@ -113,7 +93,6 @@
                         <p class="text-xs text-slate-400">{{ $user->email }}</p>
                     </div>
 
-                    {{-- REMOVE MEMBER (CAPTAIN ONLY) --}}
                     @if(auth()->user()->id === $team->captain_id)
 
                         <form method="POST" action="#">
@@ -130,16 +109,55 @@
                 </div>
 
             @empty
-
                 <p class="text-slate-400">No members yet.</p>
-
             @endforelse
 
         </div>
-
     </div>
 
-    {{-- ACTIONS (NON CAPTAIN) --}}
+    {{-- 💌 INVITE BY EMAIL (REPLACED ADD PLAYER BUTTON) --}}
+    @auth
+        @if(auth()->user()->id === $team->captain_id)
+
+        <div class="mt-6 bg-slate-900/30 border border-white/10 p-6 rounded-xl">
+
+            <h2 class="font-bold mb-4">Invite Player by Email</h2>
+
+            {{-- SUCCESS / ERROR --}}
+            @if(session('success'))
+                <p class="text-green-400 mb-3">{{ session('success') }}</p>
+            @endif
+
+            @if(session('error'))
+                <p class="text-red-400 mb-3">{{ session('error') }}</p>
+            @endif
+
+            {{-- FORM --}}
+            <form method="POST" action="{{ route('teams.invite', $team->id) }}" class="flex gap-3">
+
+                @csrf
+
+                <input type="email"
+                       name="email"
+                       placeholder="Enter player email..."
+                       class="flex-1 bg-slate-950 border border-white/10 p-3 text-white rounded-lg focus:border-purple-500 outline-none">
+
+                <button class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold uppercase text-xs rounded-lg transition">
+                    Invite
+                </button>
+
+            </form>
+
+            <p class="text-xs text-slate-500 mt-2">
+                The user will be directly added to the team if email exists.
+            </p>
+
+        </div>
+
+        @endif
+    @endauth
+
+    {{-- JOIN BUTTON (NON CAPTAIN) --}}
     <div class="mt-6 flex gap-3">
 
         @auth
