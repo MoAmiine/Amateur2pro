@@ -44,8 +44,6 @@
                 </div>
 
                 @auth
-                    <a href="/dashboard"
-                        class="px-6 py-2 bg-purple-600 hover:bg-purple-500 rounded-sm font-bold text-sm tracking-widest uppercase transition-all">Dashboard</a>
 
                     <div class="flex items-center gap-4 border-l border-white/10 pl-6 ml-2">
                         <a href="/profil" class="flex items-center gap-3 group transition-all">

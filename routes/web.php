@@ -36,6 +36,9 @@ Route::get('/equipes/create', [TeamController::class, 'create'])->name('equipes.
 Route::post('/equipes', [TeamController::class, 'store'])->name('equipes.store');
 Route::get('/equipes/{team}', [TeamController::class, 'show'])->name('equipes.show');
 Route::post('/equipes/{team}/invite', [TeamController::class, 'invite'])->name('equipes.invite');
-Route::post('/equipes/{team}/invite',[TeamController::class, 'invite'])->name('teams.invite');
-Route::get('/invite/{token}',[TeamController::class, 'accept'])->name('teams.accept');
-Route::delete('/teams/{team}/members/{user}',[TeamController::class,'removeMember'])->name('teams.members.remove');
+Route::post('/equipes/{team}/invite', [TeamController::class, 'invite'])->name('teams.invite');
+Route::get('/invite/{token}', [TeamController::class, 'accept'])->name('teams.accept');
+Route::delete('/teams/{team}/members/{user}', [TeamController::class, 'removeMember'])->name('teams.members.remove');
+Route::post('/teams/{team}/join', [TeamController::class, 'join'])->name('teams.join');
+Route::patch('/teams/{team}/members/{user}/accept', [TeamController::class, 'acceptMember'])->name('teams.members.accept');
+Route::delete('/teams/{team}/leave', [TeamController::class, 'leave'])->name('teams.leave');
