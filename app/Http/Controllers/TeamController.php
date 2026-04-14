@@ -73,22 +73,54 @@ class TeamController extends Controller
     }
 
     public function accept($token)
-{
-    $invitation = TeamInvitation::where('token',$token)->firstOrFail();
+    {
+        $invitation = TeamInvitation::where('token', $token)->firstOrFail();
 
-    $user = auth()->user();
+        $user = auth()->user();
 
-    $invitation->team->users()->attach($user->id);
+        $invitation->team->users()->attach($user->id);
 
-    $invitation->delete();
+        $invitation->delete();
 
-    return redirect()
-        ->route('equipes.show',$invitation->team)
-        ->with('success','Team joined successfully');
-} 
+        return redirect()
+            ->route('equipes.show', $invitation->team)
+            ->with('success', 'Team joined successfully');
+    }
 
-    public function removeMember(Team $team, User $user){
+    public function removeMember(Team $team, User $user)
+    {
         $team->users()->detach($user->id);
         return back();
     }
+
+    public function join(Team $team)
+    {
+        $user = auth()->user();
+
+        $team->users()->attach($user->id, [
+            'is_member' => false
+        ]);
+
+        return redirect()->route('equipes.show', $team)->with('success', 'Request sent to captain');
+    }
+
+    public function acceptMember(Team $team, User $user)
+    {
+        if (auth()->id() !== $team->captain_id) {
+            abort(403, 'Unauthorized');
+        }
+        $team->users()->updateExistingPivot($user->id, [
+            'is_member' => true
+        ]);
+
+        return back();
+    }
+    public function leave(Team $team)
+{
+    $user = auth()->user();
+
+    $team->users()->detach($user->id);
+
+    return back()->with('success', 'You left the team');
+}
 }
