@@ -29,7 +29,7 @@
                 <input name="password" type="password" class="w-full bg-slate-900 border border-white/10 p-4 rounded-sm focus:border-purple-500 outline-none transition-all">
             </div>
             <button class="w-full py-4 bg-purple-600 hover:bg-purple-500 font-bold uppercase tracking-widest transition-all">
-                Accéder au Dashboard
+                Se Connecter
             </button>
         </form>
 

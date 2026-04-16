@@ -44,3 +44,4 @@ Route::patch('/equipes/{team}/members/{user}/accept', [TeamController::class, 'a
 Route::delete('/equipes/{team}/leave', [TeamController::class, 'leave'])->name('teams.leave');
 Route::get('/equipes/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
 Route::put('/equipes/{team}', [TeamController::class, 'update'])->name('teams.update');
+Route::delete('/equipes/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');

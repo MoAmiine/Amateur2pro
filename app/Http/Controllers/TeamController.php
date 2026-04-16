@@ -49,11 +49,11 @@ class TeamController extends Controller
         return view('equipe.show', compact('teams', 'games', 'team'));
     }
 
-public function edit(Team $team)
-{
-    $games = Game::all();
-    return view('equipe.edit', compact('team', 'games'));
-}
+    public function edit(Team $team)
+    {
+        $games = Game::all();
+        return view('equipe.edit', compact('team', 'games'));
+    }
 
     public function update(UpdateTeamRequest $request, Team $team)
     {
@@ -132,5 +132,12 @@ public function edit(Team $team)
         $team->users()->detach($user->id);
 
         return back()->with('success', 'You left the team');
+    }
+
+    public function destroy(Team $team)
+    {
+        $team->delete();
+
+        return redirect()->route('teams.index');
     }
 }

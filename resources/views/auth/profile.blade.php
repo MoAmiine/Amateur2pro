@@ -140,9 +140,6 @@
                                             {{ $game->name }}
                                         </p>
 
-                                        <p class="text-slate-400 text-[10px]">
-                                            Competitive Game
-                                        </p>
                                     </div>
 
                                 </div>
