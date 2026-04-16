@@ -17,20 +17,19 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profil', [AuthController::class, 'showProfile'])->name('profile');
-    Route::post('/profile/update', [AuthController::class, 'update'])
-        ->name('profile.update');
-    Route::post('/profile/games', [AuthController::class, 'updateGames'])
-        ->name('profile.games');
+    Route::post('/profile/update', [AuthController::class, 'update'])->name('profile.update');
+    Route::post('/profile/games', [AuthController::class, 'updateGames'])->name('profile.games');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-});
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
-Route::get('/tournois', [TournamentController::class, 'index'])->name('tournois');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+        })->name('dashboard');
+        
+        Route::get('/tournois', [TournamentController::class, 'index'])->name('tournois');
 Route::get('/tournois/create', [TournamentController::class, 'create'])->name('tournois.create');
 Route::post('/tournoi/store', [TournamentController::class, 'store'])->name('tournament.store');
 Route::get('/tournois/{tournament}', [TournamentController::class, 'show'])->name('tournois.show');
+Route::get('/tournois/{tournament}/edit', [TournamentController::class, 'edit'])->name('tournois.edit');
+Route::put('/tournois/{tournament}', [TournamentController::class, 'update'])->name('tournois.update');
 
 Route::get('/equipes', [TeamController::class, 'index'])->name('teams.index');
 Route::get('/equipes/create', [TeamController::class, 'create'])->name('teams.create');
@@ -46,3 +45,5 @@ Route::delete('/equipes/{team}/leave', [TeamController::class, 'leave'])->name('
 Route::get('/equipes/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
 Route::put('/equipes/{team}', [TeamController::class, 'update'])->name('teams.update');
 Route::delete('/equipes/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
+
+});
