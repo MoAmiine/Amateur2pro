@@ -31,7 +31,7 @@
                             https://gaming-cdn.com/images/products/13664/616x353/counter-strike-2-pc-game-steam-cover.jpg?v=1695885435
                         @break
                         @case(4)
-                            https://gaming-cdn.com/images/news/articles/13774/cover/1000x563/ea-sports-fc-26-releases-on-september-26-cover68778afd733aa.jpg
+                            https://games.gg/cdn-cgi/image/width=1920,quality=75,format=auto,fit=scale-down,metadata=none,onerror=redirect/https://assets.games.gg/1758317375594_ea_sports_fc_26_update_new_fe_b8401e4e69.jpeg
                         @break
                         @case(5)
                             https://cdn-www.bluestacks.com/bs-images/Top-Free-Fire-Characters-of-2025-A-Comprehensive-Guide.png

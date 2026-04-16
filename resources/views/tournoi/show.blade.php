@@ -67,7 +67,7 @@
 
                 {{-- OWNER BUTTONS --}}
                 @if (auth()->id() === $tournament->organizer_id)
-                    <a href="#"
+                    <a href="{{ route('tournois.edit', $tournament) }}"
                         class="px-5 py-2 bg-purple-600 hover:bg-purple-500 rounded-lg font-bold uppercase text-xs">
                         Edit
                     </a>
@@ -82,7 +82,7 @@
                     </form>
 
                     {{-- VISITOR REGISTER BUTTON --}}
-                @else
+                @elseif (auth()->id() === $team->captain_id)
                     <form method="POST" action="{{ route('tournaments.register', $tournament) }}">
                         @csrf
 
@@ -139,7 +139,7 @@
             1: "https://cdn1.epicgames.com/offer/24b9b5e323bc40eea252a10cdd3b2f10/EGS_LeagueofLegends_RiotGames_S1_2560x1440-47eb328eac5ddd63ebd096ded7d0d5ab",
             2: "https://www.riotgames.com/darkroom/1440/d0807e131a84f2e42c7a303bda672789:3d02afa7e0bfb75f645d97467765b24c/valorant-offwhitelaunch-keyart.jpg",
             3: "https://gaming-cdn.com/images/products/13664/616x353/counter-strike-2-pc-game-steam-cover.jpg?v=1695885435",
-            4: "https://gaming-cdn.com/images/news/articles/13774/cover/1000x563/ea-sports-fc-26-releases-on-september-26-cover68778afd733aa.jpg",
+            4: "https://games.gg/cdn-cgi/image/width=1920,quality=75,format=auto,fit=scale-down,metadata=none,onerror=redirect/https://assets.games.gg/1758317375594_ea_sports_fc_26_update_new_fe_b8401e4e69.jpeg",
             5: "https://cdn-www.bluestacks.com/bs-images/Top-Free-Fire-Characters-of-2025-A-Comprehensive-Guide.png",
             6: "https://static0.xdaimages.com/wordpress/wp-content/uploads/2018/06/pubg.jpg?w=1200&h=675&fit=crop"
         };
