@@ -33,4 +33,8 @@ class Team extends Model
             ->withPivot('is_member')
             ->withTimestamps();
     }
+    public function game()
+    {
+        return $this->belongsTo(Game::class);
+    }
 }

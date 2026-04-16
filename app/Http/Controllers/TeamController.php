@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Mail;
 use App\Models\TeamInvitation;
 use App\Mail\TeamInviteMail;
+use App\Http\Requests\UpdateTeamRequest;
 
 class TeamController extends Controller
 {
@@ -38,7 +39,7 @@ class TeamController extends Controller
 
         $team->users()->attach(auth()->id());
 
-        return redirect()->route('equipes.index');
+        return redirect()->route('teams.index');
     }
     public function show(Team $team)
     {
@@ -48,10 +49,19 @@ class TeamController extends Controller
         return view('equipe.show', compact('teams', 'games', 'team'));
     }
 
-    public function edit()
+public function edit(Team $team)
+{
+    $games = Game::all();
+    return view('equipe.edit', compact('team', 'games'));
+}
+
+    public function update(UpdateTeamRequest $request, Team $team)
     {
-        $team = Team::all();
-        return view('equipe.edit', compact('team'));
+        $team->update($request->validated());
+
+        return redirect()
+            ->route('teams.show', $team)
+            ->with('success', 'Team updated successfully');
     }
 
     public function invite(InvitationRequest $request, Team $team)
@@ -83,7 +93,7 @@ class TeamController extends Controller
         $invitation->delete();
 
         return redirect()
-            ->route('equipes.show', $invitation->team)
+            ->route('teams.show', $invitation->team)
             ->with('success', 'Team joined successfully');
     }
 
@@ -101,7 +111,7 @@ class TeamController extends Controller
             'is_member' => false
         ]);
 
-        return redirect()->route('equipes.show', $team)->with('success', 'Request sent to captain');
+        return redirect()->route('teams.show', $team)->with('success', 'Request sent to captain');
     }
 
     public function acceptMember(Team $team, User $user)
@@ -116,11 +126,11 @@ class TeamController extends Controller
         return back();
     }
     public function leave(Team $team)
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    $team->users()->detach($user->id);
+        $team->users()->detach($user->id);
 
-    return back()->with('success', 'You left the team');
-}
+        return back()->with('success', 'You left the team');
+    }
 }

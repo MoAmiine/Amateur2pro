@@ -2,7 +2,7 @@
 
     <div class="max-w-6xl mx-auto px-6 pt-28 pb-20">
 
-        <a href="{{ route('equipes.index') }}" class="text-slate-400 hover:text-white transition text-sm">
+        <a href="{{ route('teams.index') }}" class="text-slate-400 hover:text-white transition text-sm">
             ← Back to Teams
         </a>
 
@@ -28,6 +28,12 @@
                             {{ $team->captain?->name ?? 'No captain' }}
                         </span>
                     </p>
+                    <p class="text-slate-400 text-sm mt-1">
+                        Game:
+                        <span class="text-purple-400 font-semibold">
+                            {{ $team->game->name}}
+                        </span>
+                    </p>
 
                     <p class="text-slate-400 text-sm mt-1">
                         {{ $team->users->where('pivot.is_member', true)->count() }} Players
@@ -40,7 +46,7 @@
                     @if (auth()->id() === $team->captain_id)
                         <div class="flex gap-2">
 
-                            <a href="#"
+                            <a href="{{ route('teams.edit', $team) }}"
                                 class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs uppercase font-bold rounded-lg">
                                 Edit
                             </a>
