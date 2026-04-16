@@ -17,11 +17,12 @@
             </div>
 
             <div class="relative inline-block">
-    <h1 class="text-5xl font-bold uppercase tracking-widest text-white
+                <h1
+                    class="text-5xl font-bold uppercase tracking-widest text-white
                drop-shadow-lg relative z-10">
-        {{ $tournament->name }}
-    </h1>
-    <br>
+                    {{ $tournament->name }}
+                </h1>
+                <br>
 
 
 
@@ -65,37 +66,32 @@
 
             @auth
 
-                {{-- OWNER BUTTONS --}}
-                @if (auth()->id() === $tournament->organizer_id)
-                    <a href="{{ route('tournois.edit', $tournament) }}"
-                        class="px-5 py-2 bg-purple-600 hover:bg-purple-500 rounded-lg font-bold uppercase text-xs">
-                        Edit
-                    </a>
-
-                    <form method="POST" action="#">
+                @if (!$team)
+                    <p class="text-red-500">Create a team first</p>
+                @elseif(!$isCaptain)
+                    <p class="text-red-500">Only captain can register</p>
+                @elseif($registered)
+                    <form method="POST" action="{{ route('tournaments.leave', $tournament) }}">
                         @csrf
                         @method('DELETE')
 
-                        <button class="px-5 py-2 bg-red-600 hover:bg-red-500 rounded-lg font-bold uppercase text-xs">
-                            Delete
+                        <button class="px-6 py-3 bg-red-600 rounded-lg">
+                            Leave Tournament
                         </button>
                     </form>
-
-                    {{-- VISITOR REGISTER BUTTON --}}
-                @elseif (auth()->id() === $team->captain_id)
+                @elseif($isFull)
+                    <button disabled class="px-6 py-3 bg-gray-600 rounded-lg">
+                        Tournament Full
+                    </button>
+                @else
                     <form method="POST" action="{{ route('tournaments.register', $tournament) }}">
                         @csrf
 
-                        <button
-                            class="px-6 py-2 bg-white text-black font-bold uppercase text-xs rounded-lg hover:bg-slate-200">
+                        <button class="px-6 py-3 bg-purple-600 rounded-lg">
                             Register Team
                         </button>
                     </form>
                 @endif
-            @else
-                <a href="{{ route('login') }}" class="px-6 py-2 bg-white text-black font-bold uppercase text-xs rounded-lg">
-                    Login to Register
-                </a>
 
             @endauth
 

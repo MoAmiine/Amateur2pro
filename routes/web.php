@@ -15,7 +15,12 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
+Route::get('/tournois', [TournamentController::class, 'index'])->name('tournois');
+Route::get('/tournois/{tournament}', [TournamentController::class, 'show'])->name('tournois.show');
+Route::get('/equipes', [TeamController::class, 'index'])->name('teams.index');
+Route::get('/equipes/{team}', [TeamController::class, 'show'])->name('teams.show');
 Route::middleware('auth')->group(function () {
+    
     Route::get('/profil', [AuthController::class, 'showProfile'])->name('profile');
     Route::post('/profile/update', [AuthController::class, 'update'])->name('profile.update');
     Route::post('/profile/games', [AuthController::class, 'updateGames'])->name('profile.games');
@@ -24,17 +29,14 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
         })->name('dashboard');
         
-        Route::get('/tournois', [TournamentController::class, 'index'])->name('tournois');
-Route::get('/tournois/create', [TournamentController::class, 'create'])->name('tournois.create');
-Route::post('/tournoi/store', [TournamentController::class, 'store'])->name('tournament.store');
-Route::get('/tournois/{tournament}', [TournamentController::class, 'show'])->name('tournois.show');
-Route::get('/tournois/{tournament}/edit', [TournamentController::class, 'edit'])->name('tournois.edit');
+        Route::get('/tournois/create', [TournamentController::class, 'create'])->name('tournois.create');
+        Route::post('/tournoi/store', [TournamentController::class, 'store'])->name('tournament.store');
+        Route::get('/tournois/{tournament}/edit', [TournamentController::class, 'edit'])->name('tournois.edit');
 Route::put('/tournois/{tournament}', [TournamentController::class, 'update'])->name('tournois.update');
+Route::post('/tournois/{tournament}/register', [TournamentController::class, 'register'])->name('tournaments.register');
 
-Route::get('/equipes', [TeamController::class, 'index'])->name('teams.index');
 Route::get('/equipes/create', [TeamController::class, 'create'])->name('teams.create');
 Route::post('/equipes', [TeamController::class, 'store'])->name('teams.store');
-Route::get('/equipes/{team}', [TeamController::class, 'show'])->name('teams.show');
 Route::post('/equipes/{team}/invite', [TeamController::class, 'invite'])->name('teams.invite');
 Route::post('/equipes/{team}/invite', [TeamController::class, 'invite'])->name('teams.invite');
 Route::get('/invite/{token}', [TeamController::class, 'accept'])->name('teams.accept');

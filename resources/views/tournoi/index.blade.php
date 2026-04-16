@@ -61,8 +61,7 @@
                                 <a href="{{ route('tournois.show', $t) }}"
                                     class="flex-1 py-3 border border-white/20 hover:border-white text-white font-bold uppercase tracking-widest text-xs transition text-center">
                                     Détails
-                                </a> <button
-                                    class="flex-1 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold uppercase tracking-widest text-xs transition">S'inscrire</button>
+                                </a> 
                             </div>
                         </div>
                     </div>
