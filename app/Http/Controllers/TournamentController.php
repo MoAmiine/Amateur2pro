@@ -13,7 +13,8 @@ class TournamentController extends Controller
 {
     public function index()
     {
-        return view('tournoi.index');
+        $tournament = Tournament::all();
+        return view('tournoi.index', compact('tournament'));
     }
 
     public function create()
@@ -38,4 +39,12 @@ class TournamentController extends Controller
             ->route('tournois')
             ->with('success', 'Tournament created successfully');
     }
+    public function show(Tournament $tournament)
+    {
+        $tournament->all();
+
+        return view('tournoi.show', compact('tournament'));
+    }
+
+    
 }

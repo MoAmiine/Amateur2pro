@@ -51,7 +51,7 @@
                                 Edit
                             </a>
 
-                            <form method="POST" action="{{ route('teams.destroy') }}" onsubmit="return confirm('Remove this team ?')">
+                            <form method="POST" action="{{ route('teams.destroy', $team) }}" onsubmit="return confirm('Remove this team ?')">
                                 @csrf
                                 @method('DELETE')
 

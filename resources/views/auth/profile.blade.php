@@ -139,7 +139,6 @@
                                         <p class="text-white text-xs font-bold uppercase">
                                             {{ $game->name }}
                                         </p>
-
                                     </div>
 
                                 </div>
