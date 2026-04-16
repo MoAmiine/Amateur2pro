@@ -31,9 +31,11 @@ class TournamentController extends Controller
             'cashprize' => $request->cashprize,
             'date' => $request->date,
             'description' => $request->description,
-            'organizer_id' => Auth::id()
+            'organizer_id' => auth()->id(),
         ]);
 
-        return redirect()->route('tournois');
+        return redirect()
+            ->route('tournois')
+            ->with('success', 'Tournament created successfully');
     }
 }

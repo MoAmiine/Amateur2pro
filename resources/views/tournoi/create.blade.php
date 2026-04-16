@@ -30,15 +30,15 @@
             <div class="grid grid-cols-2 gap-6">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Jeu</label>
-                    <select name="game" class="w-full bg-slate-950 border border-white/10 p-4 rounded-sm focus:border-purple-500 transition-all outline-none">
+                    <select name="game_id" class="w-full bg-slate-950 border border-white/10 p-4 rounded-sm focus:border-purple-500 transition-all outline-none">
                         @foreach ($games as $game)
-                        <option>{{ $game->name }}</option>
+                        <option value="{{ $game->id }}">{{ $game->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Max teams</label>
-                    <input type="number" name="format" placeholder="ex: 16" class="w-full bg-slate-950 border border-white/10 p-4 rounded-sm focus:border-purple-500 transition-all outline-none">
+                    <input type="number" name="max_teams" placeholder="ex: 16" class="w-full bg-slate-950 border border-white/10 p-4 rounded-sm focus:border-purple-500 transition-all outline-none">
                 </div>
             </div>
 

@@ -30,6 +30,9 @@ Route::get('/dashboard', function () {
 Route::get('/tournois', [TournamentController::class, 'index'])->name('tournois');
 Route::get('/tournois/create', [TournamentController::class, 'create'])->name('tournois.create');
 Route::post('/tournoi/store', [TournamentController::class, 'store'])->name('tournament.store');
+Route::post('/tournaments', function(){
+    dd('route working');
+});
 
 Route::get('/equipes', [TeamController::class, 'index'])->name('teams.index');
 Route::get('/equipes/create', [TeamController::class, 'create'])->name('teams.create');
