@@ -46,5 +46,19 @@ class TournamentController extends Controller
         return view('tournoi.show', compact('tournament'));
     }
 
-    
+    public function edit(Tournament $tournament)
+{
+    $games = Game::all();
+
+    return view('tournoi.edit', compact('tournament', 'games'));
+}
+
+    public function update(StoreTournamentRequest $request, Tournament $tournament)
+{
+    $tournament->update($request->validated());
+
+    return redirect()
+        ->route('tournois.show', $tournament)
+        ->with('success', 'Tournament updated successfully');
+}
 }
