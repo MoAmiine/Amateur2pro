@@ -20,7 +20,7 @@ Route::get('/tournois/{tournament}', [TournamentController::class, 'show'])->nam
 Route::get('/equipes', [TeamController::class, 'index'])->name('teams.index');
 Route::get('/equipes/{team}', [TeamController::class, 'show'])->name('teams.show');
 Route::middleware('auth')->group(function () {
-    
+
     Route::get('/profil', [AuthController::class, 'showProfile'])->name('profile');
     Route::post('/profile/update', [AuthController::class, 'update'])->name('profile.update');
     Route::post('/profile/games', [AuthController::class, 'updateGames'])->name('profile.games');
@@ -34,6 +34,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/tournois/{tournament}/edit', [TournamentController::class, 'edit'])->name('tournois.edit');
 Route::put('/tournois/{tournament}', [TournamentController::class, 'update'])->name('tournois.update');
 Route::post('/tournois/{tournament}/register', [TournamentController::class, 'register'])->name('tournaments.register');
+Route::delete('/tournois/{tournament}/leave', [TournamentController::class, 'leave'])->name('tournaments.leave');
+
 
 Route::get('/equipes/create', [TeamController::class, 'create'])->name('teams.create');
 Route::post('/equipes', [TeamController::class, 'store'])->name('teams.store');

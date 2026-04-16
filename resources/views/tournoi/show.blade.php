@@ -84,7 +84,7 @@
                         Tournament Full
                     </button>
                 @else
-                    <form method="POST" action="{{ route('tournaments.register', $tournament) }}">
+                    <form method="POST" action="{{ route('tournaments.register', $tournament->id) }}">
                         @csrf
 
                         <button class="px-6 py-3 bg-purple-600 rounded-lg">

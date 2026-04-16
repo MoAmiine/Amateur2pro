@@ -27,8 +27,7 @@ class Tournament extends Model
             Team::class,
             'tournament_team',
             'tournament_id',
-            'team_id',
-            'captain_id'
+            'team_id'
         )->withPivot(['joined_at', 'left_at']);
     }
 

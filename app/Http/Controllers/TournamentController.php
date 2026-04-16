@@ -40,14 +40,21 @@ class TournamentController extends Controller
             ->route('tournois')
             ->with('success', 'Tournament created successfully');
     }
-    public function show(Tournament $tournament, Team $team)
+    public function show(Tournament $tournament)
     {
+        $tournament->load('teams');
+
         $team = auth()->user()?->teams()->first();
+
+        $registered = false;
+        $isCaptain = false;
+
         if ($team) {
-            $registered = $tournament->teams()->where('team_id', $team->id)->exists();
+            $registered = $tournament->teams->contains('id', $team->id);
             $isCaptain = $team->captain_id === auth()->id();
         }
-        $isFull = $tournament->teams()->count() >= $tournament->max_teams;
+
+        $isFull = $tournament->teams->count() >= $tournament->max_teams;
 
         return view('tournoi.show', compact(
             'tournament',
@@ -78,24 +85,9 @@ class TournamentController extends Controller
     {
         $team = auth()->user()->teams()->first();
 
-        if (!$team) {
-            return back()->with('error', 'You must have a team first');
-        }
-
-        if ($team->captain_id !== auth()->id()) {
-            return back()->with('error', 'Only captain can register team');
-        }
-
-        if ($tournament->teams()->where('team_id', $team->id)->exists()) {
-            return back()->with('error', 'Team already registered');
-        }
-
-        if ($tournament->teams()->count() >= $tournament->max_teams) {
-            return back()->with('error', 'Tournament is full');
-        }
-
         $tournament->teams()->attach($team->id, [
-            'joined_at' => now()
+            'joined_at' => now(),
+            'tournament_id' => $tournament->id
         ]);
 
         return back()->with('success', 'Team registered successfully');
