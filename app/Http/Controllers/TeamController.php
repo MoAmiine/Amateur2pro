@@ -46,7 +46,9 @@ class TeamController extends Controller
         $team->users()->attach(auth()->id());
 
 
-        return redirect()->route('teams.show', $team)->with('success', 'Team created successfully');
+        return redirect()
+            ->route('teams.show', $team)
+            ->with('success', 'Team created successfully');
     }
     }
     public function show(Team $team)
@@ -74,8 +76,12 @@ class TeamController extends Controller
 
     public function invite(InvitationRequest $request, Team $team)
     {
-        if ($team->captain_id !== auth()->id()) {
-            return back()->with('error', 'Only captain can invite');
+            $exists = TeamInvitation::where('team_id', $team->id)
+                ->where('email', $request->email)
+                ->exists();
+
+            if ($exists) {
+            return back()->with('error', 'User already invited');
         }
 
         $invitation = TeamInvitation::create([
