@@ -92,4 +92,15 @@ class TournamentController extends Controller
 
         return back()->with('success', 'Team registered successfully');
     }
+
+    public function leave(Tournament $tournament)
+    {
+        $team = $tournament->teams()
+            ->where('captain_id', auth()->id())
+            ->first();
+        
+
+        $tournament->teams()->detach($team->id);
+        return back();
+    }
 }
