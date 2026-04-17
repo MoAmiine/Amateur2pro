@@ -34,7 +34,7 @@ class TeamController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'game_id' => $request->game_id,
-            'captain_id' => auth()->id()
+            'captain_id' => auth()->id(),
         ]);
 
         $team->users()->attach(auth()->id());
