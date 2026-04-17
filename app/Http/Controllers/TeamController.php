@@ -30,6 +30,12 @@ class TeamController extends Controller
     }
     public function store(StoreTeamRequest $request)
     {
+        $user = auth()->user();
+
+        if ($user->teams()->wherePivot('is_member', true)->exists()) {
+            return back()->with('error', 'You are already in a team');
+        }
+
         $team = Team::create([
             'name' => $request->name,
             'description' => $request->description,
@@ -39,7 +45,9 @@ class TeamController extends Controller
 
         $team->users()->attach(auth()->id());
 
-        return redirect()->route('teams.index');
+
+        return redirect()->route('teams.show', $team)->with('success', 'Team created successfully');
+    }
     }
     public function show(Team $team)
     {
@@ -106,6 +114,14 @@ class TeamController extends Controller
     public function join(Team $team)
     {
         $user = auth()->user();
+
+        $alreadyInTeam = $user->teams()
+            ->wherePivot('is_member', true)
+            ->exists();
+
+        if ($alreadyInTeam) {
+            return back()->with('error', 'You are already in a team');
+        }
 
         $team->users()->attach($user->id, [
             'is_member' => false
