@@ -11,31 +11,36 @@ return new class extends Migration
      */
 
     public function up(): void
-{
-    Schema::create('matches', function (Blueprint $table) {
-        $table->id();
+    {
+        Schema::create('tournament_matches', function (Blueprint $table) {
+            $table->id();
 
-        $table->foreignId('tournament_id')
-            ->constrained();
+            $table->foreignId('tournament_id')->constrained();
 
-        $table->foreignId('team1_id')
-            ->constrained('teams');
+            $table->foreignId('team1_id')->constrained('teams');
+            $table->foreignId('team2_id')->constrained('teams');
 
-        $table->foreignId('team2_id')
-            ->constrained('teams');
+            $table->integer('score1')->nullable();
+            $table->integer('score2')->nullable();
 
-        $table->integer('score1')->nullable();
-        $table->integer('score2')->nullable();
+            $table->foreignId('winner_id')
+                ->nullable()
+                ->constrained('teams');
 
-        $table->foreignId('winner_id')
-            ->nullable()
-            ->constrained('teams');
+            $table->integer('round')->default(1);
 
-        $table->integer('round');
+            $table->integer('position')->default(0);
 
-        $table->timestamps();
-    });
-}
+            $table->foreignId('next_match_id')
+                ->nullable()
+                ->constrained('tournament_matches')
+                ->nullOnDelete();
+
+            $table->enum('next_slot', ['team1', 'team2'])->nullable();
+
+            $table->timestamps();
+        });
+    }
 
 
     /**

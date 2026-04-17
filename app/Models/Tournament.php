@@ -13,7 +13,8 @@ class Tournament extends Model
         'cashprize',
         'date',
         'description',
-        'organizer_id'
+        'organizer_id',
+        'status'
     ];
 
     public function organizer()
@@ -30,12 +31,6 @@ class Tournament extends Model
             'team_id'
         )->withPivot(['joined_at', 'left_at']);
     }
-
-
-
-
-
-
     public function matches()
     {
         return $this->hasMany(TournamentMatch::class);
