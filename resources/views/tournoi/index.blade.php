@@ -2,6 +2,18 @@
 
     <div class="max-w-7xl mx-auto px-6 pt-28 pb-20">
 
+        @if (session('success'))
+            <div class="mb-6 bg-green-500/10 border border-green-500 text-green-400 px-6 py-4">
+                {{ session('success') }}
+            </div>
+        @endif
+
+
+        @if (session('error'))
+            <div class="mb-6 bg-red-500/10 border border-red-500 text-red-400 px-6 py-4">
+                {{ session('error') }}
+            </div>
+        @endif
         <header class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
                 <h1 class="text-6xl font-display font-bold italic tracking-tighter mb-2">LES ARÈNES</h1>
@@ -61,7 +73,7 @@
                                 <a href="{{ route('tournois.show', $t) }}"
                                     class="flex-1 py-3 border border-white/20 hover:border-white text-white font-bold uppercase tracking-widest text-xs transition text-center">
                                     Détails
-                                </a> 
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -2,6 +2,25 @@
 
     <div class="max-w-6xl mx-auto px-6 pt-28 pb-20">
 
+                @if (session('success'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+                class="mb-6 bg-green-500/10 border border-green-500 text-green-400 px-6 py-4 rounded-lg">
+
+                {{ session('success') }}
+
+            </div>
+        @endif
+
+
+        {{-- ERROR --}}
+        @if (session('error'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+                class="mb-6 bg-red-500/10 border border-red-500 text-red-400 px-6 py-4 rounded-lg">
+
+                {{ session('error') }}
+
+            </div>
+        @endif
         {{-- BACK --}}
         <a href="{{ route('tournois') }}" class="text-slate-400 hover:text-white text-sm">
             ← Back to tournaments
@@ -128,10 +147,6 @@
                                     {{ $team->name }}
                                 </div>
 
-                                <div class="text-sm text-slate-400">
-                                    🎮 {{ $team->game?->name }}
-                                </div>
-
                                 <div class="text-xs text-slate-500 mt-1">
                                     Captain: {{ $team->captain?->name ?? 'Unknown' }}
                                 </div>
@@ -143,7 +158,6 @@
                     </a>
 
                 @empty
-
                     <p class="text-slate-400">No teams registered yet.</p>
                 @endforelse
 

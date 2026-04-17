@@ -83,11 +83,11 @@ class TournamentController extends Controller
 
     public function register(Tournament $tournament)
     {
+        $user = auth()->user();
         $team = auth()->user()->teams()->first();
 
         $tournament->teams()->attach($team->id, [
-            'joined_at' => now(),
-            'tournament_id' => $tournament->id
+            'joined_at' => now()
         ]);
 
         return back()->with('success', 'Team registered successfully');
@@ -98,9 +98,9 @@ class TournamentController extends Controller
         $team = $tournament->teams()
             ->where('captain_id', auth()->id())
             ->first();
-        
+
 
         $tournament->teams()->detach($team->id);
-        return back();
+         return back()->with('success', 'Team left tournament successfully');
     }
 }

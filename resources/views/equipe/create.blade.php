@@ -50,7 +50,8 @@
             <div>
                 <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Jeu
                     principal</label>
-                <select name="game" class="w-full bg-slate-900 border border-white/10 p-3 rounded-lg">
+                <select name="game_id" class="w-full bg-slate-900 border border-white/10 p-3 rounded-lg">
+                    <option>- Selectionner votre jeu -</option>
                     @foreach ($games as $game)
                         <option value="{{ $game->id }}">{{ $game->name }}</option>
                     @endforeach

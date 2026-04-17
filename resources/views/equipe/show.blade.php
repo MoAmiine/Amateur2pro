@@ -2,6 +2,25 @@
 
     <div class="max-w-6xl mx-auto px-6 pt-28 pb-20">
 
+        @if (session('success'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+                class="mb-6 bg-green-500/10 border border-green-500 text-green-400 px-6 py-4 rounded-lg">
+
+                {{ session('success') }}
+
+            </div>
+        @endif
+
+
+        {{-- ERROR --}}
+        @if (session('error'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+                class="mb-6 bg-red-500/10 border border-red-500 text-red-400 px-6 py-4 rounded-lg">
+
+                {{ session('error') }}
+
+            </div>
+        @endif
         <a href="{{ route('teams.index') }}" class="text-slate-400 hover:text-white transition text-sm">
             ← Back to Teams
         </a>
@@ -31,7 +50,7 @@
                     <p class="text-slate-400 text-sm mt-1">
                         Game:
                         <span class="text-purple-400 font-semibold">
-                            {{ $team->game->name}}
+                            {{ $team->game->name }}
                         </span>
                     </p>
 
@@ -51,7 +70,8 @@
                                 Edit
                             </a>
 
-                            <form method="POST" action="{{ route('teams.destroy', $team) }}" onsubmit="return confirm('Remove this team ?')">
+                            <form method="POST" action="{{ route('teams.destroy', $team) }}"
+                                onsubmit="return confirm('Remove this team ?')">
                                 @csrf
                                 @method('DELETE')
 
@@ -209,7 +229,7 @@
                         <button disabled class="px-5 py-2 bg-yellow-600 text-black rounded-lg">
                             Pending Approval
                         </button>
-                    @else
+                    @elseif (auth()->id() !== $team->captain_id)
                         <form method="POST" action="{{ route('teams.leave', $team) }}">
                             @csrf
                             @method('DELETE')

@@ -33,7 +33,7 @@ class TeamController extends Controller
         $user = auth()->user();
 
         if ($user->teams()->wherePivot('is_member', true)->exists()) {
-            return back()->with('error', 'You are already in a team');
+            return redirect()->route('teams.index')->with('error', 'You are already in a team');
         }
 
         $team = Team::create([
