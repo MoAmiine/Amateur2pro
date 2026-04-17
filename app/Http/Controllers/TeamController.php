@@ -50,7 +50,7 @@ class TeamController extends Controller
             ->route('teams.show', $team)
             ->with('success', 'Team created successfully');
     }
-    }
+
     public function show(Team $team)
     {
         $team->load(['users', 'captain']);
@@ -76,11 +76,11 @@ class TeamController extends Controller
 
     public function invite(InvitationRequest $request, Team $team)
     {
-            $exists = TeamInvitation::where('team_id', $team->id)
-                ->where('email', $request->email)
-                ->exists();
+        $exists = TeamInvitation::where('team_id', $team->id)
+            ->where('email', $request->email)
+            ->exists();
 
-            if ($exists) {
+        if ($exists) {
             return back()->with('error', 'User already invited');
         }
 
@@ -93,7 +93,7 @@ class TeamController extends Controller
         Mail::to($request->email)
             ->send(new TeamInviteMail($invitation));
 
-        return back()->with('success', 'Invitation envoyée');
+        return back()->with('success', 'Invitation sent successfully');
     }
 
     public function accept($token)
@@ -101,6 +101,12 @@ class TeamController extends Controller
         $invitation = TeamInvitation::where('token', $token)->firstOrFail();
 
         $user = auth()->user();
+
+        if ($user->teams()->wherePivot('is_member', true)->exists()) {
+            return redirect()
+                ->route('teams.index')
+                ->with('error', 'You are already in a team');
+        }
 
         $invitation->team->users()->attach($user->id);
 
@@ -114,38 +120,30 @@ class TeamController extends Controller
     public function removeMember(Team $team, User $user)
     {
         $team->users()->detach($user->id);
-        return back();
+        return back()->with('success', 'Member removed successfully');;
     }
 
     public function join(Team $team)
     {
         $user = auth()->user();
 
-        $alreadyInTeam = $user->teams()
-            ->wherePivot('is_member', true)
-            ->exists();
-
-        if ($alreadyInTeam) {
+        if ($user->teams()->wherePivot('is_member', true)->exists()) {
             return back()->with('error', 'You are already in a team');
         }
-
         $team->users()->attach($user->id, [
             'is_member' => false
         ]);
 
-        return redirect()->route('teams.show', $team)->with('success', 'Request sent to captain');
+        return back()->with('success', 'Request sent to captain');
     }
 
     public function acceptMember(Team $team, User $user)
     {
-        if (auth()->id() !== $team->captain_id) {
-            abort(403, 'Unauthorized');
-        }
         $team->users()->updateExistingPivot($user->id, [
             'is_member' => true
         ]);
 
-        return back();
+        return back()->with('success', 'Member accepted');
     }
     public function leave(Team $team)
     {
@@ -160,6 +158,8 @@ class TeamController extends Controller
     {
         $team->delete();
 
-        return redirect()->route('teams.index');
+        return redirect()
+        ->route('teams.index')
+        ->with('success', 'Team deleted successfully');
     }
 }
