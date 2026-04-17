@@ -27,7 +27,7 @@
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach ($tournament as $t)
+            @forelse ($tournament as $t)
                 <div
                     class="bg-slate-900/50 border border-white/10 hover:border-purple-500 transition-all duration-300 group flex flex-col h-full">
                     <div class="h-48 overflow-hidden relative">
@@ -58,7 +58,7 @@
                             class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition duration-700">
                         <div
                             class="absolute top-4 right-4 bg-purple-600 px-3 py-1 text-[10px] font-bold uppercase tracking-widest animate-pulse">
-                            Live</div>
+                            {{ $t->status }}</div>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
                         <h3 class="font-display text-2xl font-bold uppercase tracking-widest mb-4">{{ $t->name }}
@@ -67,7 +67,7 @@
                         <div class="mt-auto">
                             <div class="flex justify-between text-sm text-slate-400 mb-6">
                                 <span>Cashprize: {{ $t->cashprize }}€</span>
-                                <span>Max teams : {{ $t->max_teams }}</span>
+                                <span>Registred teams : {{ $t->teams()->count() }} / {{ $t->max_teams }}</span>
                             </div>
                             <div class="flex gap-2">
                                 <a href="{{ route('tournois.show', $t) }}"
@@ -78,7 +78,28 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+
+                 @empty
+
+        {{-- EMPTY STATE --}}
+        <div class="col-span-full flex flex-col items-center justify-center py-24 text-center">
+
+            <h2 class="text-2xl font-bold text-white mb-2">
+                Aucun tournoi disponible
+            </h2>
+
+            <p class="text-slate-400 mb-6">
+                Crée le premier tournoi et lance la compétition !
+            </p>
+
+            <a href="{{ route('tournois.create') }}"
+                class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold uppercase">
+                Créer un tournoi
+            </a>
+
+        </div>
+
+            @endforelse
 
 
         </div>

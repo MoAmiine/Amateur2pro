@@ -1,174 +1,188 @@
-<x-layouts.app title="Tournament">
+<x-layouts.app title="Tournoi">
 
-    <div class="max-w-6xl mx-auto px-6 pt-28 pb-20">
+<div class="max-w-6xl mx-auto px-6 pt-28 pb-20">
 
-                @if (session('success'))
-            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
-                class="mb-6 bg-green-500/10 border border-green-500 text-green-400 px-6 py-4 rounded-lg">
-
-                {{ session('success') }}
-
-            </div>
-        @endif
-
-
-        {{-- ERROR --}}
-        @if (session('error'))
-            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
-                class="mb-6 bg-red-500/10 border border-red-500 text-red-400 px-6 py-4 rounded-lg">
-
-                {{ session('error') }}
-
-            </div>
-        @endif
-        {{-- BACK --}}
-        <a href="{{ route('tournois') }}" class="text-slate-400 hover:text-white text-sm">
-            ← Back to tournaments
-        </a>
-
-        {{-- HERO --}}
-        <div id="hero"
-            class="mt-6 relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-950 to-black p-10">
-
-            <div
-                class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.4),transparent_60%)]">
-            </div>
-
-            <div class="relative">
-
-                <h1 class="text-5xl font-bold uppercase tracking-widest text-white drop-shadow-lg">
-                    {{ $tournament->name }}
-                </h1>
-
-                <p class="mt-3 text-purple-400 font-semibold">
-                    🎮 {{ $tournament->game?->name }}
-                </p>
-
-                <p class="mt-2 text-slate-400 text-sm">
-                    Organized by {{ $tournament->organizer?->name }}
-                </p>
-
-                <div class="mt-6 flex flex-wrap gap-3 text-sm">
-
-                    <span class="px-3 py-1 bg-white/10 rounded-lg">
-                        📅 {{ $tournament->date }}
-                    </span>
-
-                    <span class="px-3 py-1 bg-white/10 rounded-lg">
-                        👥 Max {{ $tournament->max_teams }} Teams
-                    </span>
-
-                    <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-lg">
-                        💰 {{ $tournament->cashprize ?? 0 }} €
-                    </span>
-
-                </div>
-
-            </div>
+    @if (session('success'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+            class="mb-6 bg-green-500/10 border border-green-500 text-green-400 px-6 py-4 rounded-lg">
+            {{ session('success') }}
         </div>
+    @endif
 
-        {{-- DESCRIPTION --}}
-        <div class="mt-6 bg-slate-900/40 border border-white/10 p-6 rounded-xl">
-            <h2 class="font-bold mb-2">About Tournament</h2>
-            <p class="text-slate-400">
-                {{ $tournament->description ?? 'No description available.' }}
+    @if (session('error'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+            class="mb-6 bg-red-500/10 border border-red-500 text-red-400 px-6 py-4 rounded-lg">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <a href="{{ route('tournois') }}" class="text-slate-400 hover:text-white text-sm">
+        ← Retour aux tournois
+    </a>
+
+    <div id="hero"
+        class="mt-6 relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-950 to-black p-10">
+
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.4),transparent_60%)]"></div>
+
+        <div class="relative">
+
+            <h1 class="text-5xl font-bold uppercase tracking-widest text-white drop-shadow-lg">
+                {{ $tournament->name }}
+            </h1>
+
+            <p class="mt-3 text-purple-400 font-semibold">
+                🎮 {{ $tournament->game?->name }}
             </p>
-        </div>
 
-        {{-- ACTIONS --}}
-        <div class="mt-6 flex flex-wrap gap-3">
+            <p class="mt-2 text-slate-400 text-sm">
+                Organisé par {{ $tournament->organizer->name }}
+            </p>
+
+            <div class="mt-6 flex flex-wrap gap-3 text-sm">
+
+                <span class="px-3 py-1 bg-white/10 rounded-lg">
+                    📅 {{ $tournament->date }}
+                </span>
+
+                <span class="px-3 py-1 bg-white/10 rounded-lg">
+                    👥 Max {{ $tournament->max_teams }} équipes
+                </span>
+
+                <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-lg">
+                    💰 {{ $tournament->cashprize}} €
+                </span>
+
+            </div>
 
             @auth
+                @if(auth()->id() === $tournament->organizer_id)
 
-                @if (!$team)
-                    <p class="text-red-500">Create a team first</p>
-                @elseif(!$isCaptain)
-                    <p class="text-red-500">Only captain can register</p>
-                @elseif($registered)
-                    <form method="POST" action="{{ route('tournaments.leave', $tournament) }}" onsubmit="return confirm('You want to leave this tournament ?')">
-                        @csrf
-                        @method('DELETE')
+                    <div class="mt-6">
 
-                        <button class="px-6 py-3 bg-red-600 rounded-lg hover:bg-red-500">
-                            Leave Tournament
-                        </button>
-                    </form>
-                @elseif($isFull)
-                    <button disabled class="px-6 py-3 bg-gray-600 rounded-lg">
-                        Tournament Full
-                    </button>
-                @else
-                    <form method="POST" action="{{ route('tournaments.register', $tournament->id) }}">
-                        @csrf
+                        <form method="POST" action="#">
+                            @csrf
 
-                        <button class="px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-500">
-                            Register Team
-                        </button>
-                    </form>
+                            <button
+                                class="px-6 py-3 bg-yellow-500 text-black font-bold uppercase rounded-lg hover:bg-yellow-400 transition">
+                                Lancer le tournoi
+                            </button>
+
+                        </form>
+
+                    </div>
+
                 @endif
-
             @endauth
 
         </div>
+    </div>
 
-        {{-- REGISTERED TEAMS --}}
-        <div class="mt-10">
+    {{-- DESCRIPTION --}}
+    <div class="mt-6 bg-slate-900/40 border border-white/10 p-6 rounded-xl">
+        <h2 class="font-bold mb-2">À propos du tournoi</h2>
+        <p class="text-slate-400">
+            {{ $tournament->description ?? 'Aucune description disponible.' }}
+        </p>
+    </div>
 
-            <h2 class="text-xl font-bold uppercase tracking-widest mb-5">
-                Registered Teams
-            </h2>
+    {{-- ACTIONS --}}
+    <div class="mt-6 flex flex-wrap gap-3">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        @auth
 
-                @forelse($tournament->teams as $team)
-                    <a href="{{ route('teams.show', $team) }}"
-                        class="relative group bg-slate-900/40 border border-white/10 rounded-xl p-5 overflow-hidden hover:border-purple-500 transition">
+            @if (!$team)
+                <p class="text-red-500">Crée une équipe d’abord</p>
 
-                        {{-- hover glow --}}
-                        <div
-                            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-purple-600/10 to-blue-600/10">
+            @elseif(!$isCaptain)
+                <p class="text-red-500">Seul le capitaine peut inscrire l’équipe</p>
+
+            @elseif($registered)
+
+                <form method="POST" action="{{ route('tournois.leave', $tournament) }}"
+                    onsubmit="return confirm('Voulez-vous quitter ce tournoi ?')">
+                    @csrf
+                    @method('DELETE')
+
+                    <button class="px-6 py-3 bg-red-600 rounded-lg hover:bg-red-500">
+                        Quitter le tournoi
+                    </button>
+                </form>
+
+            @elseif($isFull)
+
+                <button disabled class="px-6 py-3 bg-gray-600 rounded-lg">
+                    Tournoi complet
+                </button>
+
+            @else
+
+                <form method="POST" action="{{ route('tournois.register', $tournament->id) }}">
+                    @csrf
+
+                    <button class="px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-500">
+                        Inscrire l’équipe
+                    </button>
+                </form>
+
+            @endif
+
+        @endauth
+
+    </div>
+
+    {{-- REGISTERED TEAMS --}}
+    <div class="mt-10">
+
+        <h2 class="text-xl font-bold uppercase tracking-widest mb-5">
+            Équipes inscrites :         {{ $tournament->teams()->count() }} / {{ $tournament->max_teams }}
+
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+            @forelse($tournament->teams as $team)
+
+                <a href="{{ route('teams.show', $team) }}"
+                    class="relative group bg-slate-900/40 border border-white/10 rounded-xl p-5 overflow-hidden hover:border-purple-500 transition">
+
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-purple-600/10 to-blue-600/10"></div>
+
+                    <div class="relative flex items-center gap-4">
+
+                        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center font-bold">
+
+                            {{ strtoupper(substr($team->name, 0, 1)) }}
+
                         </div>
 
-                        <div class="relative flex items-center gap-4">
+                        <div class="flex-1">
 
-                            {{-- LOGO --}}
-                            <div
-                                class="w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center overflow-hidden font-bold">
-
-                                {{ strtoupper(substr($team->name, 0, 1)) }}
-
-
+                            <div class="text-lg font-bold group-hover:text-purple-400 transition">
+                                {{ $team->name }}
                             </div>
 
-                            {{-- INFO --}}
-                            <div class="flex-1">
-
-                                <div class="text-lg font-bold group-hover:text-purple-400 transition">
-                                    {{ $team->name }}
-                                </div>
-
-                                <div class="text-xs text-slate-500 mt-1">
-                                    Captain: {{ $team->captain?->name ?? 'Unknown' }}
-                                </div>
-
+                            <div class="text-xs text-slate-500 mt-1">
+                                Capitaine: {{ $team->captain?->name ?? 'Inconnu' }}
                             </div>
 
                         </div>
 
-                    </a>
+                    </div>
 
-                @empty
-                    <p class="text-slate-400">No teams registered yet.</p>
-                @endforelse
+                </a>
 
-            </div>
+            @empty
+                <p class="text-slate-400">Aucune équipe inscrite.</p>
+            @endforelse
 
         </div>
 
     </div>
 
-    {{-- BACKGROUND SCRIPT --}}
-    <script>
+</div>
+
+<script>
         const gameBackgrounds = {
             1: "https://cdn1.epicgames.com/offer/24b9b5e323bc40eea252a10cdd3b2f10/EGS_LeagueofLegends_RiotGames_S1_2560x1440-47eb328eac5ddd63ebd096ded7d0d5ab",
             2: "https://www.riotgames.com/darkroom/1440/d0807e131a84f2e42c7a303bda672789:3d02afa7e0bfb75f645d97467765b24c/valorant-offwhitelaunch-keyart.jpg",

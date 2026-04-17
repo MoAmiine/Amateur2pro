@@ -16,10 +16,19 @@ use App\Http\Requests\UpdateTeamRequest;
 
 class TeamController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $games = Game::all();
         $teams = Team::all();
+        $query = Team::with(['game', 'captain', 'users']);
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        if ($request->filled('game_id')) {
+            $query->where('game_id', $request->game_id);
+        }
+        $teams = $query->get();
         return view('equipe.index', compact('games', 'teams'));
     }
 
@@ -159,7 +168,7 @@ class TeamController extends Controller
         $team->delete();
 
         return redirect()
-        ->route('teams.index')
-        ->with('success', 'Team deleted successfully');
+            ->route('teams.index')
+            ->with('success', 'Team deleted successfully');
     }
 }
