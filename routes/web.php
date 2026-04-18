@@ -51,5 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/equipes/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
 });
 
-Route::post('/tournaments/{tournament}/start',[TournamentMatchController::class, 'start'])->name('tournois.start');
+Route::post('/tournaments/{tournament}/start', [TournamentMatchController::class, 'start'])->name('tournois.start');
 Route::get('/tournaments/{tournament}/brackets', [TournamentMatchController::class, 'brackets'])->name('tournaments.brackets');
+Route::post('/tournament/{match}/score', [TournamentMatchController::class, 'score'])->name('matches.score');

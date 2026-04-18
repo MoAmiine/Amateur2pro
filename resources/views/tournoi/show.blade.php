@@ -72,21 +72,31 @@
                             </form>
 
                         </div>
-                        @endif
-                        
+                    @endif
+
                     @if ($tournament->status === 'live' && auth()->id() === $tournament->organizer_id)
-                    <div class="mt-6">
-                        <a href="{{ route('tournaments.brackets', $tournament) }}"
-                        class="px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg font-bold">
-                        Go to Brackets
-                    </a>
-                </div>
-                        @endif
+                        <div class="mt-6">
+                            <a href="{{ route('tournaments.brackets', $tournament) }}"
+                                class="px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg font-bold">
+                                Go to Brackets
+                            </a>
+                        </div>
+                    @endif
                 @endauth
 
             </div>
         </div>
-
+        <div class="mt-2.5">
+        @auth
+            @if (auth()->id() === $tournament->organizer_id && $tournament->status === 'pending')
+                <a href="{{ route('tournois.edit', $tournament) }}"
+                    class="px-4 py-2 bg-gray-600 hover:bg-gray-700 
+rounded-lg text-sm font-bold uppercase">
+                    Edit Tournament
+                </a>
+            @endif
+        @endauth
+        </div>
         {{-- DESCRIPTION --}}
         <div class="mt-6 bg-slate-900/40 border border-white/10 p-6 rounded-xl">
             <h2 class="font-bold mb-2">À propos du tournoi</h2>

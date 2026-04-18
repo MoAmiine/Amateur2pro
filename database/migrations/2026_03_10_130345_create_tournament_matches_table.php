@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('tournament_id')->constrained();
 
             $table->foreignId('team1_id')->constrained('teams');
-            $table->foreignId('team2_id')->constrained('teams');
+            $table->foreignId('team2_id')->nullable()->constrained('teams');
 
             $table->integer('score1')->nullable();
             $table->integer('score2')->nullable();
