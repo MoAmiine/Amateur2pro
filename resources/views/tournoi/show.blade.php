@@ -74,7 +74,7 @@
                         </div>
                     @endif
 
-                    @if ($tournament->status === 'live' && auth()->id() === $tournament->organizer_id)
+                    @if ($tournament->status === 'live' || $tournament->status === 'finished')
                         <div class="mt-6">
                             <a href="{{ route('tournaments.brackets', $tournament) }}"
                                 class="px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg font-bold">
@@ -86,16 +86,37 @@
 
             </div>
         </div>
+
+        {{-- TOURNAMENT WINNER --}}
+        @if ($tournament->winner)
+            <div
+                class="mt-8 bg-gradient-to-r from-green-600/20 to-emerald-600/20 
+border border-green-500/20 rounded-2xl p-8 text-center">
+
+                <p class="text-sm uppercase tracking-widest text-slate-400">
+                    🏆 Tournament Champion
+                </p>
+
+                <h2 class="text-4xl font-bold text-green-400 mt-2">
+                    {{ $tournament->winner->name }}
+                </h2>
+
+                <p class="text-slate-400 text-sm mt-2">
+                    Félicitations à l'équipe gagnante !
+                </p>
+
+            </div>
+        @endif
         <div class="mt-2.5">
-        @auth
-            @if (auth()->id() === $tournament->organizer_id && $tournament->status === 'pending')
-                <a href="{{ route('tournois.edit', $tournament) }}"
-                    class="px-4 py-2 bg-gray-600 hover:bg-gray-700 
+            @auth
+                @if (auth()->id() === $tournament->organizer_id && $tournament->status === 'pending')
+                    <a href="{{ route('tournois.edit', $tournament) }}"
+                        class="px-4 py-2 bg-gray-600 hover:bg-gray-700 
 rounded-lg text-sm font-bold uppercase">
-                    Edit Tournament
-                </a>
-            @endif
-        @endauth
+                        Edit Tournament
+                    </a>
+                @endif
+            @endauth
         </div>
         {{-- DESCRIPTION --}}
         <div class="mt-6 bg-slate-900/40 border border-white/10 p-6 rounded-xl">

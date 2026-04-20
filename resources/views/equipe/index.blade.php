@@ -131,7 +131,6 @@
             {{-- EMPTY STATE --}}
             <div class="col-span-full flex flex-col items-center justify-center py-24 text-center">
 
-                <div class="text-6xl mb-4">👥</div>
 
                 <h2 class="text-2xl font-bold text-white mb-2">
                     Aucune équipe trouvée

@@ -26,7 +26,7 @@ class TournamentController extends Controller
 
     public function store(StoreTournamentRequest $request)
     {
-        Tournament::create([
+        $tournament = Tournament::create([
             'name' => $request->name,
             'game_id' => $request->game_id,
             'max_teams' => $request->max_teams,
@@ -37,7 +37,7 @@ class TournamentController extends Controller
         ]);
 
         return redirect()
-            ->route('tournois')
+            ->route('tournois.show', $tournament)
             ->with('success', 'Tournament created successfully');
     }
     public function show(Tournament $tournament)

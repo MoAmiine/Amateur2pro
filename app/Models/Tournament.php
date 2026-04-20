@@ -14,7 +14,8 @@ class Tournament extends Model
         'date',
         'description',
         'organizer_id',
-        'status'
+        'status',
+        'winner_id'
     ];
 
     public function organizer()
@@ -39,5 +40,9 @@ class Tournament extends Model
     public function game()
     {
         return $this->belongsTo(Game::class);
+    }
+    public function winner()
+    {
+        return $this->belongsTo(Team::class, 'winner_id');
     }
 }

@@ -49,6 +49,7 @@ class TournamentMatchController extends Controller
 
         return view('tournoi.brackets', compact('tournament', 'matchesByRound'));
     }
+
     public function score(Request $request, TournamentMatch $match)
     {
         $request->validate([
@@ -56,13 +57,12 @@ class TournamentMatchController extends Controller
             'score2' => 'required|integer|min:0',
         ]);
 
-        // winner logic
-        $winner = null;
+        $winnerId = null;
 
         if ($request->score1 > $request->score2) {
-            $winner = $match->team1_id;
+            $winnerId = $match->team1_id;
         } elseif ($request->score2 > $request->score1) {
-            $winner = $match->team2_id;
+            $winnerId = $match->team2_id;
         } else {
             return back()->with('error', 'Draw not allowed');
         }
@@ -70,7 +70,7 @@ class TournamentMatchController extends Controller
         $match->update([
             'score1' => $request->score1,
             'score2' => $request->score2,
-            'winner_id' => $winner
+            'winner_id' => $winnerId,
         ]);
 
         $this->advanceWinner($match);
@@ -81,24 +81,40 @@ class TournamentMatchController extends Controller
     {
         $tournament = $match->tournament;
 
-        $nextRound = $match->round + 1;
+        $currentRound = $match->round;
 
-        $nextMatch = TournamentMatch::where('tournament_id', $tournament->id)
-            ->where('round', $nextRound)
-            ->whereNull('team2_id')
-            ->first();
+        $matches = TournamentMatch::where('tournament_id', $tournament->id)
+            ->where('round', $currentRound)
+            ->get();
 
-        if ($nextMatch) {
+        if ($matches->whereNull('winner_id')->count() > 0) {
+            return;
+        }
 
-            $nextMatch->update([
-                'team2_id' => $match->winner_id
+        $winners = $matches->pluck('winner_id')->toArray();
+
+        if ($matches->count() == 1) {
+
+            $finalWinner = $matches->first()->winner_id;
+
+            $tournament->update([
+                'winner_id' => $finalWinner,
+                'status' => 'finished'
             ]);
-        } else {
 
-            $firstEmpty = TournamentMatch::create([
+            return;
+        }
+
+        $nextRound = $currentRound + 1;
+
+        for ($i = 0; $i < count($winners); $i += 2) {
+
+            if (!isset($winners[$i + 1])) break;
+
+            TournamentMatch::create([
                 'tournament_id' => $tournament->id,
-                'team1_id' => $match->winner_id,
-                'team2_id' => null,
+                'team1_id' => $winners[$i],
+                'team2_id' => $winners[$i + 1],
                 'round' => $nextRound
             ]);
         }
