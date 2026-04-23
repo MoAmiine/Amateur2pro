@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tournament;
 use App\Models\TournamentMatch;
 use Illuminate\Http\Request;
+use App\Models\Announcement;
 
 class TournamentMatchController extends Controller
 {
@@ -32,6 +33,12 @@ class TournamentMatchController extends Controller
 
         $tournament->update([
             'status' => 'live'
+        ]);
+
+        Announcement::create([
+            'tournament_id' => $tournament->id,
+            'user_id'       => auth()->id(),
+            'text'          => "Le tournoi \"{$tournament->name}\" vient de commencer !",
         ]);
 
         return redirect()
@@ -96,10 +103,15 @@ class TournamentMatchController extends Controller
         if ($matches->count() == 1) {
 
             $finalWinner = $matches->first()->winner_id;
-
+ 
             $tournament->update([
                 'winner_id' => $finalWinner,
                 'status' => 'finished'
+            ]);
+            Announcement::create([
+                'tournament_id' => $tournament->id,
+                'user_id'       => auth()->id(),
+                'text'          => "Tournoi \"{$tournament->name}\" terminé ! L'équipe \"{$finalWinner->name}\" a gagné 🏆",
             ]);
 
             return;
