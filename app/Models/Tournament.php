@@ -45,4 +45,8 @@ class Tournament extends Model
     {
         return $this->belongsTo(Team::class, 'winner_id');
     }
+    public function announcements()
+{
+    return $this->hasMany(Announcement::class);
+}
 }
