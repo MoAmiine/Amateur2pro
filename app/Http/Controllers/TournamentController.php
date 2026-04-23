@@ -9,6 +9,7 @@ use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\HttpCache\Store;
 use App\Models\Tournament;
+use App\Models\Announcement;
 
 class TournamentController extends Controller
 {
@@ -34,6 +35,12 @@ class TournamentController extends Controller
             'date' => $request->date,
             'description' => $request->description,
             'organizer_id' => auth()->id(),
+        ]);
+
+        Announcement::create([
+            'tournament_id' => $tournament->id,
+            'user_id'       => auth()->id(),
+            'text'          => "Tournoi \"{$tournament->name}\" créé, les inscriptions sont ouvertes !",
         ]);
 
         return redirect()
@@ -101,6 +108,6 @@ class TournamentController extends Controller
 
 
         $tournament->teams()->detach($team->id);
-         return back()->with('success', 'Team left tournament successfully');
+        return back()->with('success', 'Team left tournament successfully');
     }
 }
