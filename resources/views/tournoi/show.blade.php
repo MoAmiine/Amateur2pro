@@ -94,7 +94,7 @@
 border border-green-500/20 rounded-2xl p-8 text-center">
 
                 <p class="text-sm uppercase tracking-widest text-slate-400">
-                    🏆 Tournament Champion
+                    Tournament Champion
                 </p>
 
                 <h2 class="text-4xl font-bold text-green-400 mt-2">
@@ -131,38 +131,41 @@ rounded-lg text-sm font-bold uppercase">
 
             @auth
 
+                @if ($tournament->status === 'pending')
+                    
                 @if (!$team)
-                    <p class="text-red-500">Crée une équipe d’abord</p>
+                <p class="text-red-500">Crée une équipe d’abord</p>
                 @elseif(!$isCaptain)
-                    <p class="text-red-500">Seul le capitaine peut inscrire l’équipe</p>
-                @elseif($registered)
-                    <form method="POST" action="{{ route('tournois.leave', $tournament) }}"
-                        onsubmit="return confirm('Voulez-vous quitter ce tournoi ?')">
-                        @csrf
-                        @method('DELETE')
-
-                        <button class="px-6 py-3 bg-red-600 rounded-lg hover:bg-red-500">
-                            Quitter le tournoi
-                        </button>
-                    </form>
-                @elseif($isFull)
-                    <button disabled class="px-6 py-3 bg-gray-600 rounded-lg">
-                        Tournoi complet
-                    </button>
-                @else
-                    <form method="POST" action="{{ route('tournois.register', $tournament->id) }}">
-                        @csrf
-
-                        <button class="px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-500">
-                            Inscrire l’équipe
-                        </button>
-                    </form>
-                @endif
-
+                <p class="text-red-500">Seul le capitaine peut inscrire l’équipe</p>
+                @elseif($registered && $tournament->status === 'pending')
+                <form method="POST" action="{{ route('tournois.leave', $tournament) }}"
+                onsubmit="return confirm('Voulez-vous quitter ce tournoi ?')">
+                @csrf
+                @method('DELETE')
+                
+                <button class="px-6 py-3 bg-red-600 rounded-lg hover:bg-red-500">
+                    Quitter le tournoi
+                </button>
+            </form>
+            @elseif($isFull)
+            <button disabled class="px-6 py-3 bg-gray-600 rounded-lg">
+                Tournoi complet
+            </button>
+            @else
+            <form method="POST" action="{{ route('tournois.register', $tournament->id) }}">
+                @csrf
+                
+                <button class="px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-500">
+                    Inscrire l’équipe
+                </button>
+            </form>
+            @endif
+            
             @endauth
-
+            
         </div>
-
+        
+        @endif
         {{-- REGISTERED TEAMS --}}
         <div class="mt-10">
 

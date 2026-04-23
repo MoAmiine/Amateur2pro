@@ -16,10 +16,11 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
+
 Route::get('/tournois', [TournamentController::class, 'index'])->name('tournois');
 Route::get('/equipes', [TeamController::class, 'index'])->name('teams.index');
-Route::get('/equipes/create', [TeamController::class, 'create'])->middleware('auth')->name('teams.create');
-Route::get('/tournois/create', [TournamentController::class, 'create'])->name('tournois.create');
+Route::get('/equipes/create', [TeamController::class, 'create'])->middleware('auth')->name('teams.create')->middleware('auth');
+Route::get('/tournois/create', [TournamentController::class, 'create'])->name('tournois.create')->middleware('auth');
 Route::get('/equipes/{team}', [TeamController::class, 'show'])->name('teams.show');
 Route::get('/tournois/{tournament}', [TournamentController::class, 'show'])->name('tournois.show');
 
@@ -49,8 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/equipes/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
     Route::put('/equipes/{team}', [TeamController::class, 'update'])->name('teams.update');
     Route::delete('/equipes/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
-});
+    Route::post('/tournaments/{tournament}/start', [TournamentMatchController::class, 'start'])->name('tournois.start');
+    Route::get('/tournaments/{tournament}/brackets', [TournamentMatchController::class, 'brackets'])->name('tournaments.brackets');
+    Route::post('/tournament/{match}/score', [TournamentMatchController::class, 'score'])->name('matches.score');
 
-Route::post('/tournaments/{tournament}/start', [TournamentMatchController::class, 'start'])->name('tournois.start');
-Route::get('/tournaments/{tournament}/brackets', [TournamentMatchController::class, 'brackets'])->name('tournaments.brackets');
-Route::post('/tournament/{match}/score', [TournamentMatchController::class, 'score'])->name('matches.score');
+    });
+
