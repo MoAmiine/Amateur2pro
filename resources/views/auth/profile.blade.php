@@ -4,7 +4,6 @@
 
         <div class="max-w-7xl mx-auto">
 
-            {{-- HEADER PROFILE --}}
             <div
                 class="bg-gradient-to-r from-purple-600/20 to-blue-600/20 border border-white/10 p-8 rounded-2xl mb-8 backdrop-blur">
 
@@ -48,10 +47,8 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                {{-- LEFT --}}
                 <div class="lg:col-span-2 space-y-6">
 
-                    {{-- STATS --}}
                     <div class="grid grid-cols-3 gap-6">
 
                         <div
@@ -80,7 +77,6 @@
 
                     </div>
 
-                    {{-- EDIT PROFILE --}}
                     <div class="bg-slate-900/60 border border-white/10 p-8 rounded-2xl">
 
                         <h3 class="text-xs font-bold uppercase tracking-widest text-purple-500 mb-6">

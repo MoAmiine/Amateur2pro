@@ -2,7 +2,6 @@
 
 <div class="max-w-7xl mx-auto px-6 pt-28 pb-20">
 
-    {{-- TOP BAR --}}
     <div class="flex justify-between items-center mb-8">
 
         <a 
@@ -42,8 +41,6 @@
 
     </div>
 
-
-    {{-- TOURNAMENT WINNER --}}
     @if($tournament->winner)
 
     <div class="mb-10 bg-gradient-to-r from-purple-600/20 to-blue-600/20
@@ -108,7 +105,6 @@
                     <div class="border-t border-white/5 my-2"></div>
 
 
-                    {{-- TEAM 2 --}}
                     <div class="flex justify-between items-center py-2
                     @if($match->winner_id == $match->team2_id)
                         text-green-400 font-bold
@@ -125,7 +121,6 @@
                     </div>
 
 
-                    {{-- SCORE FORM --}}
                     @if(
                         auth()->id() == $tournament->organizer_id 
                         && !$match->winner_id

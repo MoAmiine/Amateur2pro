@@ -11,7 +11,6 @@
 @csrf
 @method('PUT')
 
-{{-- NAME --}}
 <div>
     <label class="block mb-2 font-semibold">Team Name</label>
 
@@ -25,7 +24,6 @@
     @enderror
 </div>
 
-{{-- DESCRIPTION --}}
 <div>
     <label class="block mb-2 font-semibold">Description</label>
 
@@ -38,7 +36,6 @@
     @enderror
 </div>
 
-{{-- GAME --}}
 <div>
     <label class="block mb-2 font-semibold">Game</label>
 
@@ -59,7 +56,6 @@
     @enderror
 </div>
 
-{{-- LOGO URL --}}
 <div>
     <label class="block mb-2 font-semibold">Logo URL</label>
 
@@ -74,7 +70,6 @@
     @enderror
 </div>
 
-{{-- PREVIEW --}}
 <div>
     <label class="block mb-2 font-semibold">Preview</label>
 
@@ -86,7 +81,6 @@
     @endif
 </div>
 
-{{-- BUTTONS --}}
 <div class="flex gap-3 pt-2">
 
     <button class="px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg font-bold">

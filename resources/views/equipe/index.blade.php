@@ -2,7 +2,6 @@
 
 <div class="max-w-7xl mx-auto px-6 pt-28 pb-20">
 
-    {{-- SUCCESS / ERROR --}}
     @if (session('success'))
         <div class="mb-6 bg-green-500/10 border border-green-500 text-green-400 px-6 py-4">
             {{ session('success') }}
@@ -15,7 +14,6 @@
         </div>
     @endif
 
-    {{-- HEADER --}}
     <header class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
             <h1 class="text-6xl font-display font-bold italic tracking-tighter mb-2">
@@ -32,7 +30,6 @@
         </a>
     </header>
 
-    {{-- SEARCH + FILTER --}}
     <form method="GET"
           class="mb-10 bg-slate-900/30 p-4 border border-white/5 flex flex-wrap gap-4">
 
@@ -63,14 +60,12 @@
 
     </form>
 
-    {{-- GRID --}}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
         @forelse ($teams as $team)
 
             <div class="bg-slate-900/50 border border-white/10 p-6 hover:border-purple-500 transition group">
 
-                {{-- TEAM HEADER --}}
                 <div class="flex items-center gap-4 mb-6">
 
                     <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center font-bold text-xl">
@@ -89,13 +84,11 @@
 
                 </div>
 
-                {{-- INFO --}}
                 <div class="text-slate-400 text-sm mb-6">
                     <p>{{ $team->users->count() }} / 5 players</p>
                     <p>Capitaine: {{ $team->captain->name }}</p>
                 </div>
 
-                {{-- ACTIONS --}}
                 <div class="flex gap-2">
 
                     <a href="{{ route('teams.show', $team) }}"
@@ -128,7 +121,6 @@
 
         @empty
 
-            {{-- EMPTY STATE --}}
             <div class="col-span-full flex flex-col items-center justify-center py-24 text-center">
 
 

@@ -81,7 +81,6 @@
 
                  @empty
 
-        {{-- EMPTY STATE --}}
         <div class="col-span-full flex flex-col items-center justify-center py-24 text-center">
 
             <h2 class="text-2xl font-bold text-white mb-2">

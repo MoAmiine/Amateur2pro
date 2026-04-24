@@ -12,7 +12,6 @@
         @endif
 
 
-        {{-- ERROR --}}
         @if (session('error'))
             <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
                 class="mb-6 bg-red-500/10 border border-red-500 text-red-400 px-6 py-4 rounded-lg">
@@ -25,7 +24,6 @@
             ← Back to Teams
         </a>
 
-        {{-- HEADER --}}
         <div class="mt-6 bg-slate-900/40 border border-white/10 p-8 rounded-xl">
 
             <div class="flex items-center gap-6">
@@ -60,7 +58,6 @@
 
                 </div>
 
-                {{-- ACTIONS (CAPTAIN ONLY) --}}
                 @auth
                     @if (auth()->id() === $team->captain_id)
                         <div class="flex gap-2">
@@ -88,7 +85,6 @@
             </div>
         </div>
 
-        {{-- DESCRIPTION --}}
         <div class="mt-6 bg-slate-900/30 border border-white/10 p-6 rounded-xl">
 
             <h2 class="font-bold mb-2">About Team</h2>
@@ -99,7 +95,6 @@
 
         </div>
 
-        {{-- MEMBERS (ACCEPTED ONLY) --}}
         <div class="mt-6 bg-slate-900/30 border border-white/10 p-6 rounded-xl">
 
             <h2 class="font-bold mb-4">Members</h2>
@@ -121,7 +116,6 @@
                             @endif
                         </div>
 
-                        {{-- KICK (CAPTAIN ONLY) --}}
                         @if (auth()->id() === $team->captain_id && $user->id !== $team->captain_id)
                             <form method="POST" action="{{ route('teams.members.remove', [$team, $user]) }}"
                                 onsubmit="return confirm('Remove this member?')">
@@ -146,7 +140,6 @@
             </div>
         </div>
 
-        {{-- 💌 INVITE BY EMAIL --}}
         @auth
             @if (auth()->id() === $team->captain_id)
                 <div class="mt-6 bg-slate-900/30 border border-white/10 p-6 rounded-xl">
@@ -171,7 +164,6 @@
             @endif
         @endauth
 
-        {{-- 🟡 PENDING REQUESTS (CAPTAIN ONLY) --}}
         @auth
             @if (auth()->id() === $team->captain_id)
                 <div class="mt-6 bg-slate-900/30 border border-white/10 p-6 rounded-xl">
@@ -207,7 +199,6 @@
             @endif
         @endauth
 
-        {{-- JOIN BUTTON --}}
         <div class="mt-6 flex gap-3">
 
             @auth

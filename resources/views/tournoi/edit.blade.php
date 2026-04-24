@@ -13,7 +13,6 @@
         @csrf
         @method('PUT')
 
-        {{-- NAME --}}
         <div>
             <label class="text-xs uppercase text-slate-400">Name</label>
             <input type="text"
@@ -22,7 +21,6 @@
                    class="w-full mt-2 p-3 bg-slate-950 border border-white/10 rounded-lg">
         </div>
 
-        {{-- GAME --}}
         <div>
             <label class="text-xs uppercase text-slate-400">Game</label>
 
@@ -39,7 +37,6 @@
             </select>
         </div>
 
-        {{-- MAX TEAMS --}}
         <div>
             <label class="text-xs uppercase text-slate-400">Max Teams</label>
             <input type="number"
@@ -48,7 +45,6 @@
                    class="w-full mt-2 p-3 bg-slate-950 border border-white/10 rounded-lg">
         </div>
 
-        {{-- CASHPRIZE --}}
         <div>
             <label class="text-xs uppercase text-slate-400">Cashprize</label>
             <input type="number"
@@ -57,7 +53,6 @@
                    class="w-full mt-2 p-3 bg-slate-950 border border-white/10 rounded-lg">
         </div>
 
-        {{-- DATE --}}
         <div>
             <label class="text-xs uppercase text-slate-400">Date</label>
             <input type="date"
@@ -66,7 +61,6 @@
                    class="w-full mt-2 p-3 bg-slate-950 border border-white/10 rounded-lg">
         </div>
 
-        {{-- DESCRIPTION --}}
         <div>
             <label class="text-xs uppercase text-slate-400">Description</label>
             <textarea name="description"
