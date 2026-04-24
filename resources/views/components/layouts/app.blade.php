@@ -40,6 +40,7 @@
                 <div class="hidden md:flex gap-8 text-sm font-medium uppercase tracking-wider text-slate-400">
                     <a href="{{ route('tournois') }}" class="hover:text-purple-400 transition">Tournois</a>
                     <a href="{{ route('teams.index') }}" class="hover:text-purple-400 transition">Équipes</a>
+                    <a href="{{ route('announcements.index') }}" class="hover:text-purple-400 transition">Annonces</a>
                     <a href="#features" class="hover:text-purple-400 transition">Fonctionnalités</a>
                 </div>
 
