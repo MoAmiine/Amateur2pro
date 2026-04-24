@@ -21,6 +21,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect('/tournois');
     }
+    return back()->withErrors(['email' => 'Email ou mot de passe incorrect.']);
     }
     
 
