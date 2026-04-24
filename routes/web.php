@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TournamentMatchController;
+use App\Models\Announcement;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +24,7 @@ Route::get('/equipes/create', [TeamController::class, 'create'])->middleware('au
 Route::get('/tournois/create', [TournamentController::class, 'create'])->name('tournois.create')->middleware('auth');
 Route::get('/equipes/{team}', [TeamController::class, 'show'])->name('teams.show');
 Route::get('/tournois/{tournament}', [TournamentController::class, 'show'])->name('tournois.show');
+Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
 
 
 Route::middleware('auth')->group(function () {
@@ -53,6 +55,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/tournaments/{tournament}/start', [TournamentMatchController::class, 'start'])->name('tournois.start');
     Route::get('/tournaments/{tournament}/brackets', [TournamentMatchController::class, 'brackets'])->name('tournaments.brackets');
     Route::post('/tournament/{match}/score', [TournamentMatchController::class, 'score'])->name('matches.score');
-
-    });
-
+});
