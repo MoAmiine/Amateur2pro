@@ -111,7 +111,7 @@ class TournamentMatchController extends Controller
             Announcement::create([
                 'tournament_id' => $tournament->id,
                 'user_id'       => auth()->id(),
-                'text'          => "Tournoi \"{$tournament->name}\" terminé ! L'équipe \"{$finalWinner->name}\" a gagné 🏆",
+                'text'          => "Tournoi \"{$tournament->name}\" terminé ! L'équipe \"{$tournament->winner->name}\" a gagné 🏆",
             ]);
 
             return;

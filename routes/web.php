@@ -6,10 +6,9 @@ use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TournamentMatchController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login.index');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register.index');
