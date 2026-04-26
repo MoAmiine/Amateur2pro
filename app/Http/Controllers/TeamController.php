@@ -135,6 +135,13 @@ class TeamController extends Controller
             ->with('success', 'Team joined successfully');
     }
 
+    public function declineInvitation($token)
+    {
+        $invitation = TeamInvitation::where('token', $token)->firstOrFail();
+        $invitation->delete();
+        return redirect()->route('teams.index')->with('success', 'Invitation refusée.');
+    }
+
     public function removeMember(Team $team, User $user)
     {
         $team->users()->detach($user->id);

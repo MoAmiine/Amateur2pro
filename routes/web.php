@@ -26,6 +26,7 @@ Route::get('/equipes/{team}', [TeamController::class, 'show'])->name('teams.show
 Route::get('/tournois/{tournament}', [TournamentController::class, 'show'])->name('tournois.show');
 Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
 Route::get('/invite/{token}', [TeamController::class, 'showInvitation'])->name('teams.invite.show');
+Route::post('/invite/{token}/decline', [TeamController::class, 'declineInvitation'])->name('teams.invite.decline');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profil', [AuthController::class, 'showProfile'])->name('profile');
@@ -57,7 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/equipes/{team}/leave', [TeamController::class, 'leave'])->name('teams.leave');
         Route::get('/equipes/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
         Route::put('/equipes/{team}', [TeamController::class, 'update'])->name('teams.update');
-        Route::delete('/equipes/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
+        Route::delete('/equipes/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');    
     });
     Route::prefix('admin')->middleware('admin')->group(function () {
         Route::get('/',          [AdminController::class, 'dashboard'])->name('admin.dashboard');
