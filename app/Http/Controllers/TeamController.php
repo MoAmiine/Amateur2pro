@@ -9,7 +9,7 @@ use App\Models\Game;
 use App\Models\User;
 use App\Http\Requests\InvitationRequest;
 use Illuminate\Support\Str;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use App\Models\TeamInvitation;
 use App\Mail\TeamInviteMail;
 use App\Http\Requests\UpdateTeamRequest;
@@ -83,6 +83,8 @@ class TeamController extends Controller
             ->with('success', 'Team updated successfully');
     }
 
+
+
     public function invite(InvitationRequest $request, Team $team)
     {
         $exists = TeamInvitation::where('team_id', $team->id)
@@ -104,7 +106,14 @@ class TeamController extends Controller
 
         return back()->with('success', 'Invitation sent successfully');
     }
+    public function showInvitation($token)
+    {
+        $invitation = TeamInvitation::where('token', $token)
+            ->with('team')
+            ->firstOrFail();
 
+        return view('invitation', compact('invitation'));
+    }
     public function accept($token)
     {
         $invitation = TeamInvitation::where('token', $token)->firstOrFail();

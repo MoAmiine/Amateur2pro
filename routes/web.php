@@ -25,7 +25,7 @@ Route::get('/tournois/create', [TournamentController::class, 'create'])->name('t
 Route::get('/equipes/{team}', [TeamController::class, 'show'])->name('teams.show');
 Route::get('/tournois/{tournament}', [TournamentController::class, 'show'])->name('tournois.show');
 Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
-
+Route::get('/invite/{token}', [TeamController::class, 'showInvitation'])->name('teams.invite.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profil', [AuthController::class, 'showProfile'])->name('profile');
@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('teams')->group(function () {
         Route::post('/equipes', [TeamController::class, 'store'])->name('teams.store');
         Route::post('/equipes/{team}/invite', [TeamController::class, 'invite'])->name('teams.invite');
-        Route::get('/invite/{token}', [TeamController::class, 'accept'])->name('teams.accept');
+        Route::get('/invite/{token}/accept', [TeamController::class, 'accept'])->name('teams.accept');
         Route::delete('/equipes/{team}/members/{user}', [TeamController::class, 'removeMember'])->name('teams.members.remove');
         Route::post('/equipes/{team}/join', [TeamController::class, 'join'])->name('teams.join');
         Route::patch('/equipes/{team}/members/{user}/accept', [TeamController::class, 'acceptMember'])->name('teams.members.accept');
@@ -65,7 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/tournois',  [AdminController::class, 'tournois'])->name('admin.tournois');
         Route::get('/equipes',   [AdminController::class, 'equipes'])->name('admin.equipes');
         Route::patch('/users/{user}/suspend',    [AdminController::class, 'suspendUser'])->name('admin.users.suspend');
-         Route::delete('/users/{user}',           [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
+        Route::delete('/users/{user}',           [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
         Route::delete('/tournois/{tournament}',  [AdminController::class, 'destroyTournoi'])->name('admin.tournois.destroy');
         Route::delete('/equipes/{team}',         [AdminController::class, 'destroyEquipe'])->name('admin.equipes.destroy');
     });
