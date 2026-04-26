@@ -36,7 +36,7 @@ class AdminController extends Controller
 
     public function tournois()
     {
-        $tournois = Tournament::with(['organizer', 'game'])->latest()->paginate(15);
+        $tournois = Tournament::with(['organizer', 'game'])->get();
         return view('admin.tournois', compact('tournois'));
     }
     public function destroyTournoi(Tournament $tournament)
@@ -46,7 +46,7 @@ class AdminController extends Controller
     }
     public function equipes()
     {
-        $equipes = Team::with(['captain', 'game'])->latest()->paginate(15);
+        $equipes = Team::with(['captain', 'game'])->get();
         return view('admin.equipes', compact('equipes'));
     }
     public function destroyEquipe(Team $team)
