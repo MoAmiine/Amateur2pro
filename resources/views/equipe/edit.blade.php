@@ -56,30 +56,7 @@
     @enderror
 </div>
 
-<div>
-    <label class="block mb-2 font-semibold">Logo URL</label>
 
-    <input type="text"
-           name="logo"
-           value="{{ old('logo', $team->logo) }}"
-           placeholder="https://example.com/logo.png"
-           class="w-full bg-slate-900 border border-white/10 p-3 rounded-lg text-white">
-
-    @error('logo')
-    <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
-    @enderror
-</div>
-
-<div>
-    <label class="block mb-2 font-semibold">Preview</label>
-
-    @if($team->logo)
-        <img src="{{ $team->logo }}"
-             class="w-20 h-20 rounded-full object-cover border border-white/10">
-    @else
-        <p class="text-sm text-gray-400">No logo set</p>
-    @endif
-</div>
 
 <div class="flex gap-3 pt-2">
 

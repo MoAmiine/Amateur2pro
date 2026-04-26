@@ -34,6 +34,12 @@ class AdminController extends Controller
         return back()->with('success', 'Statut utilisateur mis à jour.');
     }
 
+    public function destroyUser(User $user)
+    {
+        $user->delete();
+        return back()->with('success', 'Utilisateur supprimé.');
+    }
+
     public function tournois()
     {
         $tournois = Tournament::with(['organizer', 'game'])->get();

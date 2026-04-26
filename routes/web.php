@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/tournois',  [AdminController::class, 'tournois'])->name('admin.tournois');
         Route::get('/equipes',   [AdminController::class, 'equipes'])->name('admin.equipes');
         Route::patch('/users/{user}/suspend',    [AdminController::class, 'suspendUser'])->name('admin.users.suspend');
+         Route::delete('/users/{user}',           [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
         Route::delete('/tournois/{tournament}',  [AdminController::class, 'destroyTournoi'])->name('admin.tournois.destroy');
         Route::delete('/equipes/{team}',         [AdminController::class, 'destroyEquipe'])->name('admin.equipes.destroy');
     });

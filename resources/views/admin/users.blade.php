@@ -18,7 +18,8 @@
                         <td class="px-6 py-4 font-semibold">{{ $user->name }}</td>
                         <td class="px-6 py-4 text-slate-400">{{ $user->email }}</td>
                         <td class="px-6 py-4">
-                            <span class="text-xs px-2 py-1 border
+                            <span
+                                class="text-xs px-2 py-1 border
                                 {{ $user->role?->name === 'administrateur'
                                     ? 'border-purple-500/30 text-purple-400'
                                     : 'border-white/10 text-slate-400' }}">
@@ -38,18 +39,25 @@
                                 <div class="flex gap-2 justify-end">
                                     <form method="POST" action="{{ route('admin.users.suspend', $user) }}">
                                         @csrf @method('PATCH')
-                                        <button class="px-3 py-1 text-xs font-bold uppercase border-
-                                        @if($user->suspended)
-                                        border-green-500/30 text-green-400 hover:bg-green-500/10
+                                        <button
+                                            class="px-3 py-1 text-xs font-bold uppercase border-
+                                        @if ($user->suspended) border-green-500/30 text-green-400 hover:bg-green-500/10
                                             @else{
-                                        border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10
-                                            @endif
+                                        border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10 @endif
                                             transition">
-                                            @if($user->suspended)
+                                            @if ($user->suspended)
                                                 Réactiver
                                             @else
                                                 Suspendre
                                             @endif
+                                        </button>
+                                    </form>
+                                    <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
+                                        onsubmit="return confirm('Supprimer {{ $user->name }} ?')">
+                                        @csrf @method('DELETE')
+                                        <button
+                                            class="px-3 py-1 text-xs font-bold uppercase border border-red-500/30 text-red-400 hover:bg-red-500/10 transition">
+                                            Supprimer
                                         </button>
                                     </form>
                                 </div>
