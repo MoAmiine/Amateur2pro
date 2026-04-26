@@ -19,7 +19,10 @@ class AuthController extends Controller
     public function login(LoginRequest $request) {
         if (Auth::attempt($request->validated())) {
             $request->session()->regenerate();
-            return redirect('/tournois');
+            if(auth()->user()->role_id === 2){
+                return redirect()->route('admin.dashboard');
+                }
+                return redirect('/tournois');
     }
     return back()->withErrors(['email' => 'Email ou mot de passe incorrect.']);
     }
