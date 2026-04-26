@@ -41,11 +41,15 @@
                     <a href="{{ route('tournois') }}" class="hover:text-purple-400 transition">Tournois</a>
                     <a href="{{ route('teams.index') }}" class="hover:text-purple-400 transition">Équipes</a>
                     <a href="{{ route('announcements.index') }}" class="hover:text-purple-400 transition">Annonces</a>
+                    @if (auth()->user()->role_id === 2)
+                    <a href="{{ route('admin.dashboard') }}" class="hover:text-purple-400 transition">Dashboard</a>
+                    @endif
                 </div>
 
                 @auth
 
                     <div class="flex items-center gap-4 border-l border-white/10 pl-6 ml-2">
+                        
                         <a href="/profil" class="flex items-center gap-3 group transition-all">
                             <div
                                 class="w-9 h-9 bg-purple-600/10 border border-purple-500/30 flex items-center justify-center rounded-sm group-hover:bg-purple-600 group-hover:border-purple-400 transition-all duration-300 shadow-[0_0_15px_rgba(147,51,234,0.1)]">
