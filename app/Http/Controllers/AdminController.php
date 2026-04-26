@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Tournament;
+use App\Models\Team;
+use App\Models\Announcement;
 
 class AdminController extends Controller
 {
@@ -31,5 +34,24 @@ class AdminController extends Controller
         return back()->with('success', 'Statut utilisateur mis à jour.');
     }
 
-
+    public function tournois()
+    {
+        $tournois = Tournament::with(['organizer', 'game'])->latest()->paginate(15);
+        return view('admin.tournois', compact('tournois'));
+    }
+    public function destroyTournoi(Tournament $tournament)
+    {
+        $tournament->delete();
+        return back()->with('success', 'Tournoi supprimé.');
+    }
+    public function equipes()
+    {
+        $equipes = Team::with(['captain', 'game'])->latest()->paginate(15);
+        return view('admin.equipes', compact('equipes'));
+    }
+    public function destroyEquipe(Team $team)
+    {
+        $team->delete();
+        return back()->with('success', 'Équipe supprimée.');
+    }
 }
