@@ -8,99 +8,106 @@
             </div>
         @endif
 
-
         @if (session('error'))
             <div class="mb-6 bg-red-500/10 border border-red-500 text-red-400 px-6 py-4">
                 {{ session('error') }}
             </div>
         @endif
+
         <header class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
                 <h1 class="text-6xl font-display font-bold italic tracking-tighter mb-2">LES ARÈNES</h1>
                 <p class="text-slate-400 text-lg">Choisis ton tournoi, rejoins ton équipe et domine le classement.</p>
             </div>
-
             <a href="{{ route('tournois.create') }}"
-                class="whitespace-nowrap px-8 py-3 bg-white text-slate-950 font-bold uppercase tracking-widest hover:bg-purple-500 hover:text-white transition-all duration-300">
+               class="whitespace-nowrap px-8 py-3 bg-white text-slate-950 font-bold uppercase tracking-widest hover:bg-purple-500 hover:text-white transition-all duration-300">
                 Créer un tournoi
             </a>
         </header>
 
+        @php
+            $gameImages = [
+                1 => 'https://cdn1.epicgames.com/offer/24b9b5e323bc40eea252a10cdd3b2f10/EGS_LeagueofLegends_RiotGames_S1_2560x1440-47eb328eac5ddd63ebd096ded7d0d5ab',
+                2 => 'https://www.riotgames.com/darkroom/1440/d0807e131a84f2e42c7a303bda672789:3d02afa7e0bfb75f645d97467765b24c/valorant-offwhitelaunch-keyart.jpg',
+                3 => 'https://gaming-cdn.com/images/products/13664/616x353/counter-strike-2-pc-game-steam-cover.jpg?v=1695885435',
+                4 => 'https://games.gg/cdn-cgi/image/width=1920,quality=75,format=auto,fit=scale-down,metadata=none,onerror=redirect/https://assets.games.gg/1758317375594_ea_sports_fc_26_update_new_fe_b8401e4e69.jpeg',
+                5 => 'https://cdn-www.bluestacks.com/bs-images/Top-Free-Fire-Characters-of-2025-A-Comprehensive-Guide.png',
+                6 => 'https://static0.xdaimages.com/wordpress/wp-content/uploads/2018/06/pubg.jpg?w=1200&h=675&fit=crop',
+            ];
+        @endphp
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
             @forelse ($tournament as $t)
-                <div
-                    class="bg-slate-900/50 border border-white/10 hover:border-purple-500 transition-all duration-300 group flex flex-col h-full">
+
+                @php
+                    $image = $gameImages[$t->game_id] ?? 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2000';
+
+                    $statusColor = match($t->status) {
+                        'open'        => 'bg-green-600',
+                        'in_progress' => 'bg-yellow-500',
+                        'finished'    => 'bg-slate-600',
+                        default       => 'bg-purple-600',
+                    };
+
+                    $statusLabel = match($t->status) {
+                        'open'        => 'Inscriptions ouvertes',
+                        'in_progress' => 'En cours',
+                        'finished'    => 'Terminé',
+                        default       => $t->status,
+                    };
+                @endphp
+
+                <div class="bg-slate-900/50 border border-white/10 hover:border-purple-500 transition-all duration-300 group flex flex-col h-full">
+
+                    {{-- Image --}}
                     <div class="h-48 overflow-hidden relative">
-                        <img src="
-                    @switch($t->game_id)
-                        @case(1)
-                            https://cdn1.epicgames.com/offer/24b9b5e323bc40eea252a10cdd3b2f10/EGS_LeagueofLegends_RiotGames_S1_2560x1440-47eb328eac5ddd63ebd096ded7d0d5ab
-                            @break
-                        @case(2)
-                            https://www.riotgames.com/darkroom/1440/d0807e131a84f2e42c7a303bda672789:3d02afa7e0bfb75f645d97467765b24c/valorant-offwhitelaunch-keyart.jpg  
-                        @break
-                        @case(3)
-                            https://gaming-cdn.com/images/products/13664/616x353/counter-strike-2-pc-game-steam-cover.jpg?v=1695885435
-                        @break
-                        @case(4)
-                            https://games.gg/cdn-cgi/image/width=1920,quality=75,format=auto,fit=scale-down,metadata=none,onerror=redirect/https://assets.games.gg/1758317375594_ea_sports_fc_26_update_new_fe_b8401e4e69.jpeg
-                        @break
-                        @case(5)
-                            https://cdn-www.bluestacks.com/bs-images/Top-Free-Fire-Characters-of-2025-A-Comprehensive-Guide.png
-                        @break
-                        @case(6)
-                            https://static0.xdaimages.com/wordpress/wp-content/uploads/2018/06/pubg.jpg?w=1200&h=675&fit=crop
-                        @break
-                        @default
-                            
-                    @endswitch
-                    "
-                            class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition duration-700">
-                        <div
-                            class="absolute top-4 right-4 bg-purple-600 px-3 py-1 text-[10px] font-bold uppercase tracking-widest animate-pulse">
-                            {{ $t->status }}</div>
+                        <img src="{{ $image }}"
+                             class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition duration-700">
+                        <div class="absolute top-4 right-4 {{ $statusColor }} px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
+                            {{ $statusLabel }}
+                        </div>
+                        <div class="absolute bottom-4 left-4 text-xs text-white/60 uppercase tracking-widest">
+                            {{ $t->game?->name }}
+                        </div>
                     </div>
+
+                    {{-- Content --}}
                     <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="font-display text-2xl font-bold uppercase tracking-widest mb-4">{{ $t->name }}
+
+                        <h3 class="font-display text-2xl font-bold uppercase tracking-widest mb-4">
+                            {{ $t->name }}
                         </h3>
 
                         <div class="mt-auto">
                             <div class="flex justify-between text-sm text-slate-400 mb-6">
-                                <span>Cashprize: {{ $t->cashprize }}€</span>
-                                <span>Registred teams : {{ $t->teams()->count() }} / {{ $t->max_teams }}</span>
+                                <span>💰 {{ $t->cashprize }}€</span>
+                                <span>{{ $t->teams()->count() }} / {{ $t->max_teams }} équipes</span>
                             </div>
-                            <div class="flex gap-2">
-                                <a href="{{ route('tournois.show', $t) }}"
-                                    class="flex-1 py-3 border border-white/20 hover:border-white text-white font-bold uppercase tracking-widest text-xs transition text-center">
-                                    Détails
-                                </a>
-                            </div>
+                            <a href="{{ route('tournois.show', $t) }}"
+                               class="block w-full py-3 border border-white/20 hover:border-white text-white font-bold uppercase tracking-widest text-xs transition text-center">
+                                Voir les détails
+                            </a>
                         </div>
+
                     </div>
+
                 </div>
 
-                 @empty
+            @empty
 
-        <div class="col-span-full flex flex-col items-center justify-center py-24 text-center">
-
-            <h2 class="text-2xl font-bold text-white mb-2">
-                Aucun tournoi disponible
-            </h2>
-
-            <p class="text-slate-400 mb-6">
-                Crée le premier tournoi et lance la compétition !
-            </p>
-
-            <a href="{{ route('tournois.create') }}"
-                class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold uppercase">
-                Créer un tournoi
-            </a>
-
-        </div>
+                <div class="col-span-full flex flex-col items-center justify-center py-24 text-center">
+                    <h2 class="text-2xl font-bold text-white mb-2">Aucun tournoi disponible</h2>
+                    <p class="text-slate-400 mb-6">Crée le premier tournoi et lance la compétition !</p>
+                    <a href="{{ route('tournois.create') }}"
+                       class="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold uppercase">
+                        Créer un tournoi
+                    </a>
+                </div>
 
             @endforelse
 
-
         </div>
     </div>
+
 </x-layouts.app>

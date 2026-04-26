@@ -111,7 +111,7 @@
                     @endif">
 
                         <span>
-                            {{ $match->team2->name ?? 'TBD' }}
+                            {{ $match->team2?->name ?? 'TBD' }}
                         </span>
 
                         <span class="text-lg">

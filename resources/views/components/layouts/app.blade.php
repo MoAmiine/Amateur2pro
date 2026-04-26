@@ -41,10 +41,10 @@
                     <a href="{{ route('tournois') }}" class="hover:text-purple-400 transition">Tournois</a>
                     <a href="{{ route('teams.index') }}" class="hover:text-purple-400 transition">Équipes</a>
                     <a href="{{ route('announcements.index') }}" class="hover:text-purple-400 transition">Annonces</a>
-                    @if (auth()->user()->role_id === 2)
-                    <a href="{{ route('admin.dashboard') }}" class="hover:text-purple-400 transition">Dashboard</a>
-                    @endif
                 </div>
+                    @if (auth()->user()?->role_id == 2)
+                    <a href="{{ route('admin.dashboard') }}" class="px-6 py-2 bg-purple-600 hover:bg-purple-500 rounded-sm font-bold text-sm tracking-widest uppercase transition-all">Dashboard</a>
+                    @endif
 
                 @auth
 
